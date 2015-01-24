@@ -1,0 +1,33 @@
+[submodule "bundle/nerdtree"]
+	path = bundle/nerdtree
+	url = https://github.com/scrooloose/nerdtree.git
+[submodule "bundle\\taglist"]
+	path = bundle\\taglist
+	url = https://github.com/vim-scripts/taglist.vim.git
+[submodule "bundle\\youcompleteme"]
+	path = bundle\\youcompleteme
+	url = https://github.com/Valloric/YouCompleteMe.git
+[submodule "bundle\\fugitive"]
+	path = bundle\\fugitive
+	url = https://github.com/tpope/vim-fugitive
+[submodule "bundle\\syntastic"]
+	path = bundle\\syntastic
+	url = https://github.com/scrooloose/syntastic
+[submodule "bundle\\colors-solarized"]
+	path = bundle\\colors-solarized
+	url = git://github.com/altercation/vim-colors-solarized.git
+[submodule "bundle/airline"]
+	path = bundle/airline
+	url = https://github.com/bling/vim-airline
+[submodule "bundle/tagbar"]
+	path = bundle/tagbar
+	url = https://github.com/majutsushi/tagbar
+[submodule "bundle\\tabular"]
+	path = bundle\\tabular
+	url = git://github.com/godlygeek/tabular.git
+[submodule "~/.vim/bundle/vimproc.vim"]
+	path = ~/.vim/bundle/vimproc.vim
+	url = https://github.com/Shougo/vimproc.vim.git
+[submodule "bundle/snippets"]
+	path = bundle/snippets
+	url = https://github.com/honza/vim-snippets
