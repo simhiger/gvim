@@ -820,3 +820,37 @@ endif
 "endpython
 "endfunction
 "endif
+source ~/.vim/plugin/matchit.vim
+if exists('loaded_matchit')
+let b:match_ignorecase=0
+let b:match_words=
+  \ '\<begin\>:\<end\>,' .
+  \ '\<if\>:\<else\>,' .
+  \ '\<module\>:\<endmodule\>,' .
+  \ '\<class\>:\<endclass\>,' .
+  \ '\<program\>:\<endprogram\>,' .
+  \ '\<clocking\>:\<endclocking\>,' .
+  \ '\<property\>:\<endproperty\>,' .
+  \ '\<sequence\>:\<endsequence\>,' .
+  \ '\<package\>:\<endpackage\>,' .
+  \ '\<covergroup\>:\<endgroup\>,' .
+  \ '\<primitive\>:\<endprimitive\>,' .
+  \ '\<specify\>:\<endspecify\>,' .
+  \ '\<generate\>:\<endgenerate\>,' .
+  \ '\<interface\>:\<endinterface\>,' .
+  \ '\<function\>:\<endfunction\>,' .
+  \ '\<task\>:\<endtask\>,' .
+  \ '\<case\>\|\<casex\>\|\<casez\>:\<endcase\>,' .
+  \ '\<fork\>:\<join\>\|\<join_any\>\|\<join_none\>,' .
+  \ '`ifdef\>:`else\>:`endif\>,'
+endif
+
+autocmd BufRead,BufNewFile *.v,*.vh setfiletype verilog
+autocmd BufRead,BufNewFile *.v,*.vh set expandtab tabstop=4 softtabstop=2 shiftwidth=2
+autocmd BufRead,BufNewFile *.sv,*.svi set filetype=verilog_systemverilog
+autocmd BufRead,BufNewFile *.sv,*.svi set expandtab tabstop=4 softtabstop=2 shiftwidth=2
+
+"diff to trunk
+set listchars=eol:$,tab:\>\ ,trail:.,extends:>,precedes:<
+set list   " to turn on (use :set nolist to turn off)
+map <F12> :VCSVimDiff<CR> " map F12

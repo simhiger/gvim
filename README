@@ -1,1 +1,16 @@
 git clone https://github.com/gombosh/vimconfig.git ~/.vim
+git submodule init
+git submodule update
+
+to update files use 
+git pull
+
+to check in use 
+git add .
+git commit -m "message"
+git push
+
+tagbar instead of taglist
+air not tested
+solarise color scheme not tested
+vimproc - go to dir and run "make" to build

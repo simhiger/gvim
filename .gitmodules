@@ -31,3 +31,33 @@
 [submodule "bundle/snippets"]
 	path = bundle/snippets
 	url = https://github.com/honza/vim-snippets
+[submodule "bundle/delimitMate"]
+	path = bundle/delimitMate
+	url = https://github.com/Raimondi/delimitMate
+[submodule "bundle/ultisnips"]
+	path = bundle/ultisnips
+	url = https://github.com/SirVer/ultisnips
+[submodule "bundle/matchit"]
+	path = bundle/matchit
+	url = https://github.com/vim-scripts/matchit.zip
+[submodule "bundle/python_mode"]
+	path = bundle/python_mode
+	url = git://github.com/klen/python-mode.git
+[submodule "bundle/grep"]
+	path = bundle/grep
+	url = https://github.com/vim-scripts/grep.vim
+[submodule "bundle/pyflakes"]
+	path = bundle/pyflakes
+	url = https://github.com/mitechie/pyflakes-pathogen.git
+[submodule "bundle/tasklist"]
+	path = bundle/tasklist
+	url = https://github.com/vim-scripts/TaskList.vim
+[submodule "bundle/systemverilog"]
+	path = bundle/systemverilog
+	url = git://github.com/WeiChungWu/vim-SystemVerilog.git
+[submodule "bundle/svn"]
+	path = bundle/svn
+	url = https://github.com/vim-scripts/vcscommand.vim
+[submodule "bundle/unimpaired"]
+	path = bundle/unimpaired
+	url = https://github.com/tpope/vim-unimpaired
