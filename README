@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 git clone https://github.com/gombosh/vimconfig.git ~/.vim
 git submodule init
 git submodule update
@@ -14,3 +15,6 @@ tagbar instead of taglist
 air not tested
 solarise color scheme not tested
 vimproc - go to dir and run "make" to build
+=======
+git clone https://github.com/gombosh/dotvim.git ~/.vim
+>>>>>>> 7aaa2bf04d4af113821c32aeb413e728b2206ae3
