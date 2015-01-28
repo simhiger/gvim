@@ -3,6 +3,7 @@ git clone https://github.com/gombosh/dotvim.git dotvim
 cd dotvim
 git submodule init
 git submodule update --recursive
+find .vim/ -name "*.vim" -exec dos2unix {} \;
 
 to update files use 
 git pull
