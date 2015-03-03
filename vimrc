@@ -1,15 +1,18 @@
 " .vimrc File
 " Maintained by: Doron Gombosh
-" doron.gombosh@siverge.com
-" http://www.siverge.com
+" doron.gombosh@satixfy.com
+" http://www.satixfy.com
 "
 
-version 7.3
+version 7.4
+if v:version < 700
+	finish
+endif
+
 
 "Forget compatibility with Vi. Who cares. FIXME need to be checked
 set nocompatible
 
-filetype off
 "call pathogen#runtime_append_all_bundles()
 call pathogen#infect()
 call pathogen#helptags()
@@ -26,163 +29,175 @@ syntax on
 "set autowrite
 set noautowrite
 
+set backspace=2 "make backspace work like most other apps
+
 "move btween windows with ctrl
 map <c-j> <c-w>j
 map <c-k> <c-w>k
 map <c-l> <c-w>l
 map <c-h> <c-w>h
 
+"Want a different map leader than \
+"set mapleader = ",";
+
+"Ever notice a slight lag after typing the leader key + command? This lowers
+"the timeout.
+"set timeoutlen=500
+
+"Display current cursor position in lower right corner.
+"set ruler
+"
 "add to taswk list
 map <leader>td <Plug>TaskList
 
-"revision history tool
-map <leader>g :GundoToggle<CR>
+"revision history tool - not installed
+"map <leader>g :GundoToggle<CR>
 
-"replaces grep
-nmap <leader>a <Esc>:Ack!
+"replaces grep - not installed
+"nmap <leader>a <Esc>:Ack!
 
 "pyflakes
 let g:pyflakes_use_quickfix = 0
 
-"for python activate supertab completion
+"for python activate supertab completion - need to move to filetype detect file
 au FileType python set omnifunc=pythoncomplete#Complete
 let g:SuperTabDefaultCompletionType = "context"
 set completeopt=menuone,longest,preview
 
-"Display current cursor position in lower right corner.
-"set ruler
-
-""Want a different map leader than \
-""set mapleader = ",";
-"
-""Ever notice a slight lag after typing the leader key + command? This lowers
-""the timeout.
-""set timeoutlen=500
-"
 ""Set the color scheme. Change this to your preference.
 ""Here's 100 to choose from: http://www.vim.org/scripts/script.php?script_id=625
 colorscheme torte
-
-set backspace=2
-
 "Set font type and size. Depends on the resolution. Larger screens, prefer h20
 "set guifont=LucidaTypewriter\ \9
 "set guifont=Monospace\ \9
 
-let Tlist_Ctags_Cmd="C:/\ctags58/\ctags.exe"
-"Tab stuff http://vimcasts.org/episodes/tabs-and-spaces/
-"set tabstop=4
-"set shiftwidth=4
-""set softtabstop=3
-"set expandtab
-""set smarttab
+"Taglist - not installed
+"let Tlist_Ctags_Cmd="C:/\ctags58/\ctags.exe"
+
+""Tab stuff http://vimcasts.org/episodes/tabs-and-spaces/
+set tabstop=3 "the width of the tab character (in spaces)
+set shiftwidth=3 "shiftwidth == softtabstop so i can work with spaces and not tabs
+set softtabstop=3 "how many white spaces to insert when tabbing
+set expandtab "transform tabs to spaces"
+""set smarttab "inset tabs at start of line and spaces at middle
+
+
+"following seeting are controlled by external plugin so I disabled them here.
+"set shortmess=xotI "shorten messages so you dont have to press enter, but i don't use this for now.
+"set showcmd "Show command in bottom right portion of the screen
+set showmatch "When a bracket is inserted briefly jump to the matching one
+
+""Indent stuff - needs to be controlled for each filetype seperatlly
+"set smartindent "this one tries to guess the indent, but it's bad in most cases
+set autoindent "this one is simpler, just takes the indent from the last line, but if I have a special indent file for some filetype, it will overwrite this.
 "
-"set shortmess=xotI          " shorten messages
+"set whichwrap=bshl<>[]      "select which keys can wrap lines, I disabled it here, but it looks like it's activated somewhere else.
 "
-""Show command in bottom right portion of the screen
-"set showcmd
+"set laststatus=2 "Always show the status line - done by plugin, but maybe I need it because sometimes the statusline dissapears
 "
-""When a bracket is inserted briefly jump to the matching one
-"set showmatch
-"
-""Show lines numbers
-"set number
-"
-""Indent stuff
-""set smartindent
-"set autoindent
-"
-"set whichwrap=bshl<>[]      " allow movement between lines
-"
-""Always show the status line
-"set laststatus=2
-"
-""Prefer a slightly higher line height TODO what is this?
-"set linespace=3
+""Prefer a slightly higher line height - that's the gap between lines
+set linespace=3
+
 "
 ""Better line wrapping
-"set wrap
+set wrap
 "" Make shift-W toggle between wrap and unwrap longlines
-"map <S-W>  :set wrap! <CR>
+map <S-W>  :set wrap! <CR>
 "
 "" Allow virtual edit, place cursor wherever you want
 "" set ve=all
-"set ve=block
+set ve=block
 "
+" set the maximum line size (longer than that will be broken to 2 lines) set
+" by plugin but quite anoying.
 ""set textwidth=79
 "set textwidth=0 "unlimited
+"
+" this make some big changes, not everyone will like it.
 ""set formatoptions=qrnl1
 "
 ""Set incremental searching"
-"set incsearch
+set incsearch
 "
 ""Highlight searching
-"set hlsearch
+set hlsearch
 "
 "" case insensitive search
-"set ignorecase
-"set smartcase
+set ignorecase
+set smartcase
 "
-"Enable code folding
+"Enable code folding - let's let the plugin control that
 "set foldenable
-set foldmethod=indent
-set foldlevel=99
+"set foldmethod=indent
+"set foldlevel=99
 
-""Hide mouse when typing
+""Hide mouse when typing - can be anoying because you have to move the mouse
+"to see where it is.
 "set mousehide
 "
-""Shortcut to fold tags with leader (usually \) + ft
+""Shortcut to fold tags with leader (usually \) + ft - don't know what that is.
 ""nnoremap <leader>ft Vatzf
 "
-"" Create dictionary for custom expansions FIXME useful for UVM
+"" Create dictionary for custom expansions FIXME useful for UVM, but UVM has
+"" it's own plugins so leave it disabled for now
 "set dictionary+=/store/public/Temp/uvm_dict.txt
 "
 ""Opens a vertical split and switches over (\v)
-"nnoremap <leader>v <C-w>v<C-w>l
+nnoremap <leader>v <C-w>v<C-w>l
 "
-"map <leader>dos :e ++ff=dos<CR>
+"very usefull for the anoying dos/unix files - force to dos mode.
+map <leader>dos :e ++ff=dos<CR>
+"the next one actually changes the file. save and check in after you do that
+"for permanent fix.
+map <leader>dos2unix :%s/\r\(\n\)/\1/g<CR>
 "
-""Split windows below the current window.
-"set splitbelow              
+""Split windows below the current window. - I like this better
+set splitbelow
+set splitright
 "
-"" session settings TODO what it does??
+"" session settings for mksession, the defaults are good enough
 ""set sessionoptions=resize,winpos,winsize,buffers,tabpages,folds,curdir,help
 "
 ""Set up an HTML5 template for all new .html files FIXME for system verilog
 ""autocmd BufNewFile * silent! 0r $VIMHOME/templates/%:e.tpl
 
-"Shortcut for editing  vimrc file in a new tab
+"Shortcut for editing  vimrc file in a new tab - this is one of the most
+"usefull things in the world!
 nmap <leader>ev :tabedit $MYVIMRC<cr>
 
 ""Saves time; maps the spacebar to colon
 ""nmap <space> :
-"" Make Space bar enter insert mode
-"map <Space> <Insert>
+"" Make Space bar enter insert mode - I'm just used to that, sorry.
+" FIXME it's canceled somewhere, need to find out where
+map <Space> <Insert>
 "
-""Automatically change current directory to that of the file in the buffer
-"autocmd BufEnter * cd %:p:h
+"Automatically change current directory to that of the file in the buffer
+"vim actually has a native function for this 'autochdir' but this is better
+autocmd BufEnter * cd %:p:h
 "
 ""Map code completion to , + tab TODO might be use
 ""imap <leader><tab> <C-x><C-o>
 "
+""Auto-completion menu for command line - behave like bash
+set wildmode=list:longest
 "" More useful command-line completion
-"set wildmenu
-"
-"" wildchar	key that triggers command-line expansion
+set wildmenu
+"" wildchar key that triggers command-line expansion
 "set wildchar=<Tab>
 "
-"" Set showmode (show the mode in the bottom - visual/insert etc.)
+"" Set showmode (show the mode in the bottom - visual/insert etc.) - done by plugin
 "set smd
 "
-"" Make complete look in dictionary
+"" Make complete look in dictionary - makes it slower, I don't think it's good
 "set cpt=.,k,b,t,i
 "
-"" Show complittion
-"set sft
+"" Show full tag of completion
+set sft
 "
 "" number of screen lines to show around the cursor
-"set so=2
+set so=5
 "
+" supposed to make it full screen, but I never saw it working well
 "if has("gui_running")
 "  " GUI is running or is about to start.
 "  " Maximize gvim window.
@@ -190,27 +205,23 @@ nmap <leader>ev :tabedit $MYVIMRC<cr>
 "endif
 "
 "" Make history buffer larger default 20
-"set hi=2000
+set hi=100
 "
 "" Make shell commands work faster
-""set shell=csh\ -f
+set shell=csh\ -f
 "
-"" suffixesadd - used when searching for a file
-"set suffixesadd=.v,.e,.py,.sv
+"" suffixesadd - used when searching for a file with gf
+set suffixesadd=.v,.py,.sv,.c,.cpp,.h,.svh
 "
-""path - This is a list of directories which will be searched TODO what is it
-""doing
-"set path=.,,./**,../**
-"
-""TODO what is explVertical in gvimrc
+"path - This is a list of directories which will be searched when using gf
+"add spv include and uvm include
+set path=.,,./**,../**
 "
 "be xterm
 "
 "" Make block mode work in insert mode
-"map! <C-V> <Esc><C-V>
+map! <C-V> <Esc><C-V>
 "
-""Auto-completion menu TODO what is this?
-"set wildmode=list:longest
 "
 ""http://vim.wikia.com/wiki/Make_Vim_completion_popup_menu_work_just_like_in_an_IDE
 ""set completeopt=longest,menuone
@@ -220,7 +231,6 @@ nmap <leader>ev :tabedit $MYVIMRC<cr>
 "inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
 "  \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 "
-""Delete all buffers (via Derek Wyatt) TODO what is this?
 "nmap <silent> ,da :exec "1," . bufnr('$') . "bd"<cr>
 "
 ""Bubble single lines (kicks butt)
@@ -246,19 +256,6 @@ endif
 ""nmap <C-k> <C-w>k
 ""nmap <C-l> <C-w>l
 "
-""------------------------"
-""NERDTREE PLUGIN SETTINGS
-""------------------------"
-""Shortcut for NERDTreeToggle
-""nmap <leader>nt :NERDTreeToggle <CR>
-"
-""Show hidden files in NerdTree
-"let NERDTreeShowHidden=1
-"
-""autopen NERDTree and focus cursor in new document
-""autocmd VimEnter * NERDTree
-""autocmd VimEnter * wincmd p
-"
 ""Spelling corrects. Just for example. Add yours below.
 "iab teh the
 "iab Teh The
@@ -271,76 +268,82 @@ endif
 ""au FocusLost * :wa
 "
 "" Backups
-""set backupdir=~/.vim/tmp/backup// " backups
+set backupdir=~/.backup " backups
 ""set directory=~/.vim/tmp/swap// " swap files
-""set backup " enable backup
+set backup " enable backup
 "set nobackup
 "
-"set showmatch " show matching brackets
 "
+"If you exit Vim and later start it again, you would normally lose a lot of
+"information.  The viminfo file can be used to remember that information, which
+"enables you to continue where you left off.
 "set viminfo='100,\"50,:200  " read /write a .viminfo file, don't store more than 50 lines of registers
 "
 "" Use popup menu for right mouse button and keep shift-left mouse button as search
-"set mousemodel=popup
-"map <S-LeftMouse> <LeftMouse>*
-"map! <S-LeftMouse> <Esc><LeftMouse>*
+set mousemodel=popup
+map <S-LeftMouse> <LeftMouse>*
+map! <S-LeftMouse> <Esc><LeftMouse>*
 "
 ""Added by orenc
 ""Make sure that <EOL> is displayed as ^M when file type is "MS-DOS" or "Mac"
 "set ffs=unix
 "
 "" confirm start a dialog when a command fails
-"set cf
+set cf
 "
 ""TODO what is ttym what is sel (selection)
 "
 "" equalalways	make all windows the same size when adding/removing windows
 "set noea
 "
-"autocmd BufNewFile *.py call InsertPythonPackage() 
-"
-""TODO change name
-"function! InsertPythonPackage() 
-"    let dir = getcwd() 
-"    let result = append(0, "'''")     
-"    let result = append(1, "-------------------------------------------------------------------------") 
-"    let filename = expand("%") 
-"    let result = append(2, "File name    : " . filename ) 
-"    let result = append(3, "Title        : ") 
-"    let result = append(4, "Project      : CFPGA") 
-"    let result = append(5, "Developers   : Doron Gombosh ") 
-"    let date = strftime("%a %b %d, %Y  %I:%M%p")
-"    let result = append(6, "Created      : " . date) 
-"    let result = append(7, "Description  : ") 
-"    let result = append(8, "Notes        : ") 
-"    let result = append(9, "---------------------------------------------------------------------------") 
-"    let result = append(10, "Copyright 2012 (c) Siverge Networks") 
-"    let result = append(11, "---------------------------------------------------------------------------*/")
-"    let result = append(12, "'''")     
-"  
-"endfunction
-"
-"autocmd BufNewFile *.v,*.sv,*.svh call InsertVerilogPackage()
-"
-""TODO change name
-"function! InsertVerilogPackage() 
-"    let filename = expand("%") 
-"    let date = strftime("%a %b %d, %Y  %I:%M%p")
-"	 let result = append(0, "// -------------------------------------------------------------------------")
-"	 let result = append(1, "// File name		: " . filename . " ")
-"	 let result = append(2, "// Title				: ")
-"	 let result = append(3, "// Project      	: ")
-"	 let result = append(4, "// Developers   	: Doron Gombosh ")
-"	 let result = append(5, "// Created      	: " . date . " ")
-"	 let result = append(6, "// Last modified  : ")
-"	 let result = append(7, "// Description  	: ")
-"	 let result = append(8, "// Notes        	: ")
-"	 let result = append(9, "// Version			: 0.1")
-"	 let result = append(10, "// ---------------------------------------------------------------------------")
-"	 let result = append(11, "// Copyright 2013 (c) Siverge Networks Ltd")
-"	 let result = append(12, "// Confidential Proprietary ")
-"	 let result = append(13, "// ---------------------------------------------------------------------------")
-"endfunction
+autocmd BufNewFile *.py call InsertPythonPackage() 
+
+"TODO change name
+function! InsertPythonPackage() 
+    let dir = getcwd() 
+    
+    let result = append(0,"#!/usr/local/bin/python2.7")
+    let result = append(1, "'''")     
+    let result = append(2, "-------------------------------------------------------------------------") 
+    let filename = expand("%") 
+    let result = append(3, "File name    : " . filename ) 
+    let result = append(4, "Title        : ") 
+    let result = append(5, "Project      : ") 
+    let username = expand("$USER") 
+    let result = append(6, "Developers   :  " . username) 
+    let date = strftime("%a %b %d, %Y  %I:%M%p")
+    let result = append(7, "Created      : " . date) 
+    let result = append(8, "Description  : ") 
+    let result = append(9, "Notes        : ") 
+    let result = append(10, "---------------------------------------------------------------------------") 
+    let result = append(11, "Copyright 2015 (c) Satixfy Ltd") 
+    let result = append(12, "---------------------------------------------------------------------------*/")
+    let result = append(13, "'''")     
+  
+endfunction
+
+autocmd BufNewFile *.v,*.sv,*.svh call InsertVerilogPackage()
+
+"TODO change name
+function! InsertVerilogPackage() 
+    let filename = expand("%") 
+    let date = strftime("%a %b %d, %Y  %I:%M%p")
+	 let result = append(0, "// -------------------------------------------------------------------------")
+	 let result = append(1, "// File name		: " . filename . " ")
+	 let result = append(2, "// Title				: ")
+	 let result = append(3, "// Project      	: ")
+	 let username = expand("$USER") 
+	 let result = append(4, "// Developers   	: " . username . " ")
+	 let result = append(5, "// Created      	: " . date . " ")
+	 let result = append(6, "// Last modified  : ")
+	 let result = append(7, "// Description  	: ")
+	 let result = append(8, "// Notes        	: ")
+	 let result = append(9, "// Version			: 0.1")
+	 let result = append(10, "// ---------------------------------------------------------------------------")
+	 let result = append(11, "// Copyright 2015 (c) Satixfy Ltd")
+	 let result = append(12, "// Confidential Proprietary ")
+	 let result = append(13, "// ---------------------------------------------------------------------------")
+endfunction
 "
 "
 "" map the [ ] keys
@@ -349,145 +352,149 @@ endif
 "map ] $<NL>
 "
 "" save and suspend
-"map Z :w<NL>
+map Z :w<NL>
 "
 "
-"map <F10> :co .<NL>:s/[!-~]/-/g<NL>:s/- -/---/g<NL>:s/-  -/----/g<NL>
+map <F10> :co .<NL>:s/[!-~]/-/g<NL>:s/- -/---/g<NL>:s/-  -/----/g<NL>V<F2><esc>
 "
-""Menu items for Commenting and Un-Commenting code 
-"amenu 20.435 &Edit.-SEP4- : 
-"amenu Edit.Comment <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call Comment(fl, ll)<CR> 
-"amenu Edit.UnComment <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call UnComment(fl, ll)<CR>
-"
-""Function for commenting a block of Visually selected text 
-"function! Comment(fl, ll) 
-"    let i=a:fl 
-"let comment="//" 
-"while i<=a:ll 
-"    let cl=getline(i) 
-"let cl2=comment.cl 
-"call setline(i, cl2) 
-"let i=i+1 
-"endwhile 
-"endfunction 
-"
-""Function for Un-Commenting a block of Visually selected text 
-"function! UnComment(fl, ll) 
-"    let i=a:fl 
-"let comment="//" 
-"while i<=a:ll 
-"    let cl=getline(i) 
-"let cl2=substitute(cl, "//", "", "") 
-"call setline(i, cl2) 
-"let i=i+1 
-"endwhile 
-"endfunction 
-"
-""-------------------------------------------------------------------
-""Function for commenting a block of Visually selected text 
-"function! Commentpy(fl, ll) 
-"    let i=a:fl 
-"let comment="#" 
-"while i<=a:ll 
-"    let cl=getline(i) 
-"let cl2=comment.cl 
-"call setline(i, cl2) 
-"let i=i+1 
-"endwhile 
-"endfunction 
-"
-""Function for Un-Commenting a block of Visually selected text 
-"function! UnCommentpy(fl, ll) 
-"    let i=a:fl 
-"let comment="#" 
-"while i<=a:ll 
-"    let cl=getline(i) 
-"let cl2=substitute(cl, "#", "", "") 
-"call setline(i, cl2) 
-"let i=i+1 
-"endwhile 
-"endfunction 
-""-------------------------------------------------------------------
-"
+"Menu items for Commenting and Un-Commenting code 
+amenu 20.435 &Edit.-SEP4- : 
+amenu Edit.Comment <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call Comment(fl, ll)<CR> 
+amenu Edit.UnComment <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call UnComment(fl, ll)<CR>
 "" Insert # comments
-"vmap <F2>  <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call Comment(fl, ll)<CR> 
-"vmap <S-F2> <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call UnComment(fl, ll)<CR> 
+vmap <F2>  <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call Comment(fl, ll)<CR> 
+vmap <S-F2> <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call UnComment(fl, ll)<CR> 
+"
+"Function for commenting a block of Visually selected text 
+function! Comment(fl, ll) 
+    let i=a:fl 
+let comment="//" 
+while i<=a:ll 
+    let cl=getline(i) 
+let cl2=comment.cl 
+call setline(i, cl2) 
+let i=i+1 
+endwhile 
+endfunction 
+
+"Function for Un-Commenting a block of Visually selected text 
+function! UnComment(fl, ll) 
+    let i=a:fl 
+let comment="//" 
+while i<=a:ll 
+    let cl=getline(i) 
+let cl2=substitute(cl, "//", "", "") 
+call setline(i, cl2) 
+let i=i+1 
+endwhile 
+endfunction 
+"
+"-------------------------------------------------------------------
+"Function for commenting a block of Visually selected text 
+function! Commentpy(fl, ll) 
+    let i=a:fl 
+let comment="#" 
+while i<=a:ll 
+    let cl=getline(i) 
+let cl2=comment.cl 
+call setline(i, cl2) 
+let i=i+1 
+endwhile 
+endfunction 
+
+"Function for Un-Commenting a block of Visually selected text 
+function! UnCommentpy(fl, ll) 
+    let i=a:fl 
+let comment="#" 
+while i<=a:ll 
+    let cl=getline(i) 
+let cl2=substitute(cl, "#", "", "") 
+call setline(i, cl2) 
+let i=i+1 
+endwhile 
+endfunction 
+"-------------------------------------------------------------------
+"
 "
 "" Useful abbreviations
 "iab DG Doron Gombosh
 "iab OE Omer Ephrat
 "iab YG Yael Gluk
 "iab YB Yuval Berger
+"iab DR Dima Roginsky
+"iab IR Igal Rilkin
 "
 ""TODO move to global file
 "au BufReadPost *.vsif so ~/bin/vsif.vim
 ""au BufReadPost *.sv so ~/.vim/syntax/systemverilog.vim
 "
 "" maximum of 20 tabs opened with -p
-"set tabpagemax=20
+set tabpagemax=12
 "
 ""guioptions	list of flags that specify how the GUI works
-"set go+=acegmiLTrtb
-"set guitablabel=%t
+set go+=acegmiLTrtb
+set guitablabel=%t
 "
 ""svn 
-"map <S-F11> :!svn lock %<CR>
-"map <S-F12> :!svn ci % -m " "<CR>
-"map <F12> :tabnew 
-"map <F11> :close <CR>
-"map <F9>  :MyGrep 
-"imap <F9> <ESC>:MyGrep 
-"map <S-F9> :MyGrep "<cword>" .<CR>
-"vmap <S-F9> :MyGrep "<cword>" .<CR>
-""Add grep abbilty to gvim
-"function! MyGrep(...)
-"  if a:0 < 2
-"    echo "Usage: MyGrep <options> <pattern> <dir>"
-"    echo 'Example: MyGrep -r "cow" ~/Desktop/*'
-"    return
-"  endif
-"  if a:0 == 2
-"    let options = '-rsinI'
-"    let pattern = a:1
-"    let dir = a:2
-"  else
-"    let options = a:1 . 'snI'
-"    let pattern = a:2
-"    let dir = a:3
-"  endif
-"  let exclude = 'grep -v "/.svn"'
-"  let cmd = 'grep '.options.' '.pattern.' '.dir. '| '.exclude
-"  let cmd_output = system(cmd)
-"  if cmd_output == ""
-"    echomsg "Pattern " . pattern . " not found"
-"    return
-"  endif
-"
-"  let tmpfile = tempname()
-"  exe "redir! > " . tmpfile
-"  silent echon '[grep search for "'.pattern.'" with options "'.options.'"]'."\n"
-"  silent echon cmd_output
-"  redir END
-"
-"  let old_efm = &efm
-"  set efm=%f:%\\s%#%l:%m
-"
-"  execute "silent! cgetfile " . tmpfile
-"  let &efm = old_efm
-"  botright copen
-"
-"  call delete(tmpfile)
-"endfunction
-"command! -nargs=* -complete=file MyGrep call MyGrep(<f-args>)
-"
-""FIXME work with session as project
-""nmap <F3> <ESC>:call LoadSession()<CR> 
-""let s:sessionloaded = 0 
-""function! LoadSession() 
-""    setlocal modifiable
-""    source session.vim 
-""    let s:sessionloaded = 1 
-""endfunction 
+map <S-F11> :!svn lock %<CR>
+map <S-F12> :!svn ci % -m " "<CR>
+map <F12> :tabnew 
+map <F11> :close <CR>
+map <F9>  :MyGrep 
+imap <F9> <ESC>:MyGrep 
+map <S-F9> :MyGrep "<cword>" .<CR>
+vmap <S-F9> :MyGrep "<cword>" .<CR>
+imap <S-F9> <ESC>:MyGrep "<cword>" .<CR>
+"Add grep abbilty to gvim
+function! MyGrep(...)
+  if a:0 < 2
+    echo "Usage: MyGrep <options> <pattern> <dir>"
+    echo 'Example: MyGrep -r "cow" ~/Desktop/*'
+    return
+  endif
+  if a:0 == 2
+    let options = '-rsinI'
+    let pattern = a:1
+    let dir = a:2
+  else
+    let options = a:1 . 'snI'
+    let pattern = a:2
+    let dir = a:3
+  endif
+  let exclude = 'grep -v "/.svn"'
+  let cmd = 'grep '.options.' '.pattern.' '.dir. '| '.exclude
+  let cmd_output = system(cmd)
+  if cmd_output == ""
+    echomsg "Pattern " . pattern . " not found"
+    return
+  endif
+
+  let tmpfile = tempname()
+  exe "redir! > " . tmpfile
+  silent echon '[grep search for "'.pattern.'" with options "'.options.'"]'."\n"
+  silent echon cmd_output
+  redir END
+
+  let old_efm = &efm
+  set efm=%f:%\\s%#%l:%m
+
+  execute "silent! cgetfile " . tmpfile
+  let &efm = old_efm
+  botright copen
+
+  call delete(tmpfile)
+endfunction
+
+command! -nargs=* -complete=file MyGrep call MyGrep(<f-args>)
+
+"FIXME work with session as project
+"nmap <F3> <ESC>:call LoadSession()<CR> 
+"let s:sessionloaded = 0 
+"function! LoadSession() 
+"    setlocal modifiable
+"    source session.vim 
+"    let s:sessionloaded = 1 
+"endfunction 
 ""function! SaveSession() 
 ""    if s:sessionloaded == 1 
 ""        mksession! 
@@ -517,71 +524,6 @@ endif
 "
 "au BufWritePost *.py !pyflakes %
 "
-""FIXME it doesn't work
-"if has("python")
-"
-"    " pydoc (displays documentation on function under corsor)
-"    let g:pydoc_cmd = "/usr/bin/pydoc"
-"
-"    set switchbuf=useopen
-"    function! ShowPyDoc(name, type)
-"        if !exists('g:pydoc_cmd')
-"            let g:pydoc_cmd = 'pydoc'
-"        endif
-"        if bufnr("__doc__") >0
-"                exe "sb __doc__"
-"        else
-"                exe 'split __doc__'
-"        endif
-"        setlocal noswapfile
-"        set buftype=nofile
-"        setlocal modifiable
-"        normal ggdG
-"        let s:name2 = substitute(a:name, '(.*', '', 'g' )
-"        if a:type==1
-"            execute  "silent read ! " g:pydoc_cmd . " " . s:name2 
-"        else 
-"            execute  "silent read ! ".g:pydoc_cmd. " -k " . s:name2 
-"        endif	
-"        setlocal nomodified
-"        set filetype=man
-"        normal 1G
-"     if !exists('g:pydoc_highlight')
-"            let g:pydoc_highlight = 1
-"        endif
-"      if g:pydoc_highlight ==1
-"            call Highlight(s:name2)
-"        endif	
-"    endfunction
-"
-"
-"    function! Highlight(name)
-"        exe "sb __doc__"
-"        set filetype=man
-"        syn on
-"        exe 'syntax keyword pydoc '.s:name2
-"        hi pydoc gui=reverse
-"
-"    endfunction
-"
-"    "mappings
-"    map  <leader>pw :call ShowPyDoc('<C-R><C-W>', 1)<CR> 
-"    map  <leader>pW :call ShowPyDoc('<C-R><C-A>', 1)<CR> 
-"    map  <S-K> :call ShowPyDoc('<C-R><C-W>', 1)<CR> 
-"    map  <C-S-K> :call ShowPyDoc('<C-R><C-A>', 1)<CR> 
-"
-"    "commands
-"    command! -nargs=1 Pydoc :call ShowPyDoc('<args>', 1)
-"    command! -nargs=*  PydocSearch :call ShowPyDoc('<args>', 0)
-"
-"    "end of pydoc (displays documentation on function under corsor)
-"
-"endif "has("python")
-"
-"map  <F6>   :NERDTreeToggle<CR>
-"map  <S-F6> :NERDTree 
-""map  <F5>   :mks session.vim<CR>
-"
 "" How to behave in Diff mode TODO check if better options
 "if &diff
 "    set co=171
@@ -595,53 +537,22 @@ endif
 "
 "endif
 "
+"done by plugin
 "set stl=%1*(%n)\ %2*%F\ %1*%y%w%m%r%=\ \ \ %2*Row=%l\ Col=%c\%V%3*\ %P%*
-"
-"autocmd BufNewFile weekly*.txt call InsertWeeklyPackage()
-"
-"function! InsertWeeklyPackage() 
-"    let dir = getcwd() 
-"    let result = append(0, "-------------------------------------------------------------------------")     
-"    let result = append(1, "-------------------------------------------------------------------------") 
-"    let filename = expand("%") 
-"    let result = append(2, "File name    : " . filename ) 
-"    let result = append(3, "Title        : Weekly report") 
-"    let result = append(4, "Project      : UNICORN") 
-"    let result = append(5, "Developers   : Doron Gombosh ") 
-"    let date = strftime("%a %b %d, %Y  %I:%M%p")
-"    let result = append(6, "Created      : " . date) 
-"    let result = append(7, "Description  : ") 
-"    let result = append(8, "Notes        : ") 
-"    let result = append(9, "---------------------------------------------------------------------------") 
-"    let result = append(10, "Copyright 2011 (c) Siverge Networks") 
-"    let result = append(11, "---------------------------------------------------------------------------*/")
-"    let result = append(12, "")
-"    let result = append(13, "Sunday:")
-"    let result = append(14, "")
-"    let result = append(15, "Monday:")
-"    let result = append(16, "")
-"    let result = append(17, "Tuesday:")
-"    let result = append(18, "")
-"    let result = append(19, "Wednesday:")
-"    let result = append(20, "")
-"    let result = append(21, "Thursday:")
-"    let result = append(22, "")
-"  
-"endfunction
 "
 "" Make Shift-Arrow select like in Solaris
 "map! <S-C-Left> <Right><Esc>vb<Left><Insert>
 "map! <S-C-Right> <Right><Esc>ve<Right><Insert>
 "map! <S-Left> <Right><Esc>v<Left><Insert>
 "map! <S-Right> <Right><Esc>v<Right><Insert>
-"map! <S-Up> <Esc>v<Up><Insert>
-"map! <S-Down> <Esc>v<Down><Insert>
+map! <S-Up> <Esc>v<Up><Insert>
+map! <S-Down> <Esc>v<Down><Insert>
 "map <S-C-Left> <Right><Esc>vb<Left>
 "map <S-C-Right> <Esc>vw<Right>
 "map <S-Left> <Right><Esc>v<Left>
 "map <S-Right> <Esc>v<Right>
-"map <S-Up> <Esc>v<Up>
-"map <S-Down> <Esc>v<Down>
+map <S-Up> <Esc>v<Up>
+map <S-Down> <Esc>v<Down>
 "
 "if has("python")
 "function! Doron()
@@ -820,7 +731,7 @@ endif
 "endpython
 "endfunction
 "endif
-source ~/.vim/plugin/matchit.vim
+source ~/.vim/bundle/matchit/plugin/matchit.vim
 if exists('loaded_matchit')
 let b:match_ignorecase=0
 let b:match_words=
@@ -845,12 +756,115 @@ let b:match_words=
   \ '`ifdef\>:`else\>:`endif\>,'
 endif
 
-autocmd BufRead,BufNewFile *.v,*.vh setfiletype verilog
-autocmd BufRead,BufNewFile *.v,*.vh set expandtab tabstop=4 softtabstop=2 shiftwidth=2
-autocmd BufRead,BufNewFile *.sv,*.svi set filetype=verilog_systemverilog
-autocmd BufRead,BufNewFile *.sv,*.svi set expandtab tabstop=4 softtabstop=2 shiftwidth=2
+"autocmd BufRead,BufNewFile *.v,*.vh setfiletype verilog
+"autocmd BufRead,BufNewFile *.v,*.vh set expandtab tabstop=4 softtabstop=2 shiftwidth=2
+"autocmd BufRead,BufNewFile *.sv,*.svi set filetype=verilog_systemverilog
+"autocmd BufRead,BufNewFile *.sv,*.svi set expandtab tabstop=4 softtabstop=2 shiftwidth=2
 
 "diff to trunk
 set listchars=eol:$,tab:\>\ ,trail:.,extends:>,precedes:<
-set list   " to turn on (use :set nolist to turn off)
-map <F12> :VCSVimDiff<CR> " map F12
+set nolist   " to turn on (use :set nolist to turn off)
+map <leader>dt :VCSVimDiff<CR>
+
+" Track the engine.
+"Plugin '/bundle/ultisnips'
+
+" Snippets are separated from the engine. Add this if you want them:
+"Plugin 'bundle/vim-snippets'
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+"NERD TREE
+"Show hidden files in NerdTree
+let NERDTreeShowHidden=1
+"toggle nerdtree with f6
+map  <silent> <F6>   :NERDTreeToggle<CR>
+""autopen NERDTree and focus cursor in new document
+""autocmd VimEnter * NERDTree
+""autocmd VimEnter * wincmd p
+
+"syntastic syntax helper
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+"AirLine plugin
+set laststatus=2 "always show status line
+
+set number "Show lines numbers
+highlight LineNr ctermfg=grey ctermbg=black guibg=black guifg=grey
+
+"autocmd BufReadPost * call SET_TAGS_LOCATION()
+"set tags=/home/dorong/tags
+
+"if has("python")
+function! SET_TAGS_LOCATION()
+python << endpython
+import vim
+import os
+def set_tags_location():
+  pwd = os.getcwd()
+  vim.command("set tags=~/tags")
+  if "users" in pwd:
+    splitted_pwd = pwd.split("/")
+    while "users" in splitted_pwd[:-2]:
+      workdir_path = "/".join(splitted_pwd)
+      workdir_tags = workdir_path+"/tags"
+      if os.path.exists(workdir_tags):
+        vim.command("set tags="+workdir_tags)
+        break
+      else:
+        splitted_pwd = splitted_pwd[:-1]
+
+set_tags_location()
+endpython
+endfunction
+
+function! Pydiff()
+python << endpython
+import vim
+import os
+def PyDiff():
+	file1 = vim.buffers[1].name
+	file2 = vim.buffers[2].name
+	result = os.popen("~dorong/largediff.py "+file1+" "+file2)
+	for line in result:
+		print line
+
+PyDiff()
+endpython
+endfunction
+
+function! MyPwd()
+python << endpython
+   import os
+   def MyPwd(file):
+      print os.path.abspath(file)
+
+   MyPwd("%")
+endpython
+endfunction
+"endif
+
+vmap <C-S> e <ESC> /<C-R>*<CR>
+
+let  g:C_UseTool_cmake    = 'yes' 
+let  g:C_UseTool_doxygen = 'yes'
+
+"make vim detect filenames with : so it can open the line and columb
+set isfname+=:
+
+"autocmd BufReadPost *.log silent %s!,!:!g
+"autocmd BufReadPost *.log silent %s!|!:!g
+"autocmd BufReadPost *.log :0
+"autocmd BufReadPost *.log :/\*E

@@ -1,0 +1,7 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =5
+let g:netrw_dirhist_1='/raid/data/73C1_EVT1/users/dorong/work1/blocks/isp_hvbin_v06/regs_def'
+let g:netrw_dirhist_2='/raid/data/ISP/users/dorong/work2t2/blocks/isp_gtg2t2_v00/simul/default/logs'
+let g:netrw_dirhist_3='/raid/data/ISP/users/dorong/work2t2/blocks/isp_gtg2t2_v00/vcomp_src'
+let g:netrw_dirhist_4='/raid/data/ISP/users/dorong/work2t2/blocks/isp_gtg2t2_v00/regression/tests/vcd'
+let g:netrw_dirhist_5='/ourwork/RND/projects/catniss_proj/labels'
