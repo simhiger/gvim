@@ -246,7 +246,7 @@ map! <C-V> <Esc><C-V>
 if has("autocmd")
  augroup myvimrchooks
   au!
-  autocmd bufwritepost _vimrc source ~/_vimrc
+  autocmd bufwritepost .vimrc source ~/.vimrc
  augroup END
 endif
 "
@@ -296,7 +296,7 @@ set cf
 "" equalalways	make all windows the same size when adding/removing windows
 "set noea
 "
-autocmd BufNewFile *.py call InsertPythonPackage() 
+autocmd! BufNewFile *.py call InsertPythonPackage() 
 
 "TODO change name
 function! InsertPythonPackage() 
@@ -779,6 +779,9 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
+
+"where to look for snippets?
+let g:UltiSnipsSnippetDirectories=["$HOME/.vim/bundle/snippets/UltiSnips"] 
 
 "NERD TREE
 "Show hidden files in NerdTree
