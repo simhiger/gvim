@@ -766,22 +766,8 @@ set listchars=eol:$,tab:\>\ ,trail:.,extends:>,precedes:<
 set nolist   " to turn on (use :set nolist to turn off)
 map <leader>dt :VCSVimDiff<CR>
 
-" Track the engine.
-"Plugin '/bundle/ultisnips'
-
 " Snippets are separated from the engine. Add this if you want them:
 "Plugin 'bundle/vim-snippets'
-
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
-
-"where to look for snippets?
-let g:UltiSnipsSnippetDirectories=["$HOME/.vim/bundle/snippets/UltiSnips"] 
 
 "NERD TREE
 "Show hidden files in NerdTree
