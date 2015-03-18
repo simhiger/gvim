@@ -60,9 +60,11 @@ map <leader>td <Plug>TaskList
 let g:pyflakes_use_quickfix = 0
 
 "for python activate supertab completion - need to move to filetype detect file
-au FileType python set omnifunc=pythoncomplete#Complete
-let g:SuperTabDefaultCompletionType = "context"
-set completeopt=menuone,longest,preview
+" this was old stuff from before python mode
+"au FileType python set omnifunc=pythoncomplete#Complete
+"let g:SuperTabDefaultCompletionType = "context"
+"set completeopt=menuone,longest,preview
+let g:pymode_rope_lookup_project = 0 "fix a bug in python mode
 
 ""Set the color scheme. Change this to your preference.
 ""Here's 100 to choose from: http://www.vim.org/scripts/script.php?script_id=625
@@ -322,7 +324,7 @@ function! InsertPythonPackage()
   
 endfunction
 
-autocmd BufNewFile *.v,*.sv,*.svh call InsertVerilogPackage()
+autocmd! BufNewFile *.v,*.sv,*.svh call InsertVerilogPackage()
 
 "TODO change name
 function! InsertVerilogPackage() 
@@ -363,7 +365,9 @@ amenu Edit.Comment <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call Comm
 amenu Edit.UnComment <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call UnComment(fl, ll)<CR>
 "" Insert # comments
 vmap <F2>  <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call Comment(fl, ll)<CR> 
-vmap <S-F2> <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call UnComment(fl, ll)<CR> 
+vmap <S-F2> <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call UnComment(fl, ll)<CR>
+autocmd FileType python,sh vmap <F2>  <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call Commentpy(fl, ll)<CR>
+autocmd FileType python,sh vmap <S-F2> <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call UnCommentpy(fl, ll)<CR>
 "
 "Function for commenting a block of Visually selected text 
 function! Comment(fl, ll) 
@@ -793,7 +797,7 @@ set laststatus=2 "always show status line
 set number "Show lines numbers
 highlight LineNr ctermfg=grey ctermbg=black guibg=black guifg=grey
 
-"autocmd BufReadPost * call SET_TAGS_LOCATION()
+autocmd BufReadPost * call SET_TAGS_LOCATION()
 "set tags=/home/dorong/tags
 
 "if has("python")
@@ -857,3 +861,12 @@ set isfname+=:
 "autocmd BufReadPost *.log silent %s!|!:!g
 "autocmd BufReadPost *.log :0
 "autocmd BufReadPost *.log :/\*E
+
+let &titlestring = hostname() . "[vim(" . expand("%:t") . ")]"
+if &term == "screen"
+  set t_ts=^[k
+  set t_fs=^[\
+endif
+if &term == "screen" || &term == "xterm"
+  set title
+endif
