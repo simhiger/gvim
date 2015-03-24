@@ -65,6 +65,8 @@ let g:pyflakes_use_quickfix = 0
 "let g:SuperTabDefaultCompletionType = "context"
 "set completeopt=menuone,longest,preview
 let g:pymode_rope_lookup_project = 0 "fix a bug in python mode
+"for pymode plugin - remove red end of line 
+"let g:pymode_options_max_line_length = 0
 
 ""Set the color scheme. Change this to your preference.
 ""Here's 100 to choose from: http://www.vim.org/scripts/script.php?script_id=625
@@ -257,6 +259,12 @@ endif
 ""nmap <C-j> <C-w>j
 ""nmap <C-k> <C-w>k
 ""nmap <C-l> <C-w>l
+"allows to navigate open windows using the - ALT + arrow keys
+nmap <silent> <A-Up> :wincmd k<CR>
+nmap <silent> <A-Down> :wincmd j<CR>
+nmap <silent> <A-Left> :wincmd h<CR>
+nmap <silent> <A-Right> :wincmd l<CR>
+
 "
 ""Spelling corrects. Just for example. Add yours below.
 "iab teh the
