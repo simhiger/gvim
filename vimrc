@@ -66,17 +66,28 @@ let g:pyflakes_use_quickfix = 0
 "set completeopt=menuone,longest,preview
 let g:pymode_rope_lookup_project = 0 "fix a bug in python mode
 "for pymode plugin - remove red end of line 
-"let g:pymode_options_max_line_length = 0
+let g:pymode_options_max_line_length = 0
+"Turn on code completion support in the plugin
+"let g:pymode_rope_completion = 0
+"Turn on the rope script
+"let g:pymode_rope = 0
+"Skip errors and warnings
+"E.g. "E501,W002", "E2,W" (Skip all Warnings and Errors that starts with E2) and etc
+"let g:pymode_lint_ignore = "E501,W"
+"let g:pymode_lint_ignore = "E501"   "skip 'too long' warning
+
 
 ""Set the color scheme. Change this to your preference.
 ""Here's 100 to choose from: http://www.vim.org/scripts/script.php?script_id=625
 colorscheme torte
 "Set font type and size. Depends on the resolution. Larger screens, prefer h20
 "set guifont=LucidaTypewriter\ \9
-"set guifont=Monospace\ \9
+"set guifont=Monospace\ \12
 
 "Taglist - not installed
 "let Tlist_Ctags_Cmd="C:/\ctags58/\ctags.exe"
+"Tagbar
+let g:tagbar_ctags_bin = '/home/dorong/bin/ctags/bin/ctags'
 
 ""Tab stuff http://vimcasts.org/episodes/tabs-and-spaces/
 set tabstop=3 "the width of the tab character (in spaces)
@@ -803,6 +814,9 @@ let g:syntastic_check_on_wq = 0
 
 "AirLine plugin
 set laststatus=2 "always show status line
+" here is an example of how you could replace the branch indicator with
+" the current working directory, followed by the filename.
+let g:airline_section_b = "[" . hostname() . ']%{getcwd()}'
 
 set number "Show lines numbers
 highlight LineNr ctermfg=grey ctermbg=black guibg=black guifg=grey
@@ -872,7 +886,8 @@ set isfname+=:
 "autocmd BufReadPost *.log :0
 "autocmd BufReadPost *.log :/\*E
 
-let &titlestring = hostname() . "[vim(" . expand("%:t") . ")]"
+"let &titlestring = hostname() . "[vim(" . expand("%:t") . ")]"
+let &titlestring = "%t"
 if &term == "screen"
   set t_ts=^[k
   set t_fs=^[\
@@ -886,3 +901,6 @@ endif
 let g:clang_auto_select = 2
 let g:clang_jumpto_declaration_key = '<C-.>'
 let g:clang_jumpto_back_key = '<C-,>'
+"
+" not to use tags
+set complete-=t
