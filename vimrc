@@ -219,7 +219,8 @@ set suffixesadd=.v,.py,.sv,.c,.cpp,.h,.svh
 "
 "path - This is a list of directories which will be searched when using gf
 "add spv include and uvm include
-set path=.,,./**,../**
+"set path=.,,./**,../**
+set path=.
 "
 "be xterm
 "
@@ -280,6 +281,7 @@ nmap <silent> <A-Right> :wincmd l<CR>
 "" Backups
 set backupdir=~/.backup " backups
 ""set directory=~/.vim/tmp/swap// " swap files
+set noswapfile
 set backup " enable backup
 "set nobackup
 "
@@ -526,7 +528,7 @@ command! -nargs=* -complete=file MyGrep call MyGrep(<f-args>)
 "let Tlist_Use_Horiz_Window=0
 "" Shorter commands to toggle Taglist display
 "nnoremap TT :TlistToggle<CR>
-"map <F4> :TlistToggle<CR>
+map <F4> :Tagbar<CR>
 "" Various Taglist diplay config:
 "let Tlist_Use_Right_Window = 1
 "let Tlist_Compact_Format = 0
@@ -878,3 +880,9 @@ endif
 if &term == "screen" || &term == "xterm"
   set title
 endif
+
+"clang flags
+"let g:clang_complete_copen = 1
+let g:clang_auto_select = 2
+let g:clang_jumpto_declaration_key = '<C-.>'
+let g:clang_jumpto_back_key = '<C-,>'
