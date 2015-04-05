@@ -823,10 +823,10 @@ let g:airline_section_b = "[" . hostname() . ']%{getcwd()}'
 set number "Show lines numbers
 highlight LineNr ctermfg=grey ctermbg=black guibg=black guifg=grey
 
-autocmd BufReadPost * call SET_TAGS_LOCATION()
-"set tags=/home/dorong/tags
+set tags=~/tags
 
-"if has("python")
+if has("python")
+autocmd BufReadPost * call SET_TAGS_LOCATION()
 function! SET_TAGS_LOCATION()
 python << endpython
 import vim
@@ -873,7 +873,7 @@ python << endpython
    MyPwd("%")
 endpython
 endfunction
-"endif
+endif
 
 vmap <C-S> e <ESC> /<C-R>*<CR>
 
