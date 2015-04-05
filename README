@@ -1,13 +1,24 @@
-<<<<<<< HEAD
+first time use:
 git clone https://github.com/gombosh/dotvim.git dotvim
 cd dotvim
-git submodule init
-git submodule update --recursive
+git submodule update --init --recursive
+git checkout 5949b89 bundle/fileline/plugin/file_line.vim //fix issue with fileline
+link your ~/.vim directory to dotvim: ln -s dotvim .vim
+reomve any ~/.vimrc and ~/.gvimrc files you have.
+
+create a ~/myvimrc file to overide/add functionality.
+I think in the minimum it should contain the following line:
+colorscheme torte
+
+not necesserily needed:
 find .vim/ -name "*.vim" -exec dos2unix {} \;
 find .vim/ -name "*.sh" -exec dos2unix {} \;
 
-to update files use 
+to update files use:
 git pull
+
+to update plugins:
+git submodule update --init --recursive
 
 to check in use 
 git add .
@@ -15,9 +26,5 @@ git commit -m "message"
 git push
 
 tagbar instead of taglist
-air not tested
+airline changed to full path
 solarise color scheme not tested
-vimproc - go to dir and run "make" to build
-=======
-git clone https://github.com/gombosh/dotvim.git ~/.vim
->>>>>>> 7aaa2bf04d4af113821c32aeb413e728b2206ae3

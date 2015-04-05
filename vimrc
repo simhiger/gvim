@@ -79,7 +79,7 @@ let g:pymode_options_max_line_length = 0
 
 ""Set the color scheme. Change this to your preference.
 ""Here's 100 to choose from: http://www.vim.org/scripts/script.php?script_id=625
-colorscheme torte
+"colorscheme torte
 "Set font type and size. Depends on the resolution. Larger screens, prefer h20
 "set guifont=LucidaTypewriter\ \9
 "set guifont=Monospace\ \12
@@ -578,6 +578,8 @@ map! <S-Down> <Esc>v<Down><Insert>
 "map <S-Right> <Esc>v<Right>
 map <S-Up> <Esc>v<Up>
 map <S-Down> <Esc>v<Down>
+map <S-Left> <Esc>gT
+map <S-Right> <Esc>gt
 "
 "if has("python")
 "function! Doron()
@@ -901,6 +903,11 @@ endif
 let g:clang_auto_select = 2
 let g:clang_jumpto_declaration_key = '<C-.>'
 let g:clang_jumpto_back_key = '<C-,>'
+let g:clang_library_path ="/home/dorong/bin/clang/lib"
 "
 " not to use tags
 set complete-=t
+
+if filereadable(glob("~/myvimrc")) 
+    source ~/myvimrc
+endif
