@@ -806,13 +806,13 @@ map  <silent> <F6>   :NERDTreeToggle<CR>
 ""autocmd VimEnter * wincmd p
 
 "syntastic syntax helper
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
 
 "AirLine plugin
 set laststatus=2 "always show status line
@@ -899,10 +899,10 @@ if &term == "screen" || &term == "xterm"
 endif
 
 "clang flags
-"let g:clang_complete_copen = 1
+let g:clang_complete_copen = 1
 let g:clang_auto_select = 2
-let g:clang_jumpto_declaration_key = '<C-.>'
-let g:clang_jumpto_back_key = '<C-,>'
+"let g:clang_jumpto_declaration_key = '<C-.>'
+"let g:clang_jumpto_back_key = '<C-,>'
 let g:clang_library_path ="/home/dorong/bin/clang/lib"
 "
 " not to use tags
