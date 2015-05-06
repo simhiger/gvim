@@ -137,7 +137,7 @@ def gen_verilog_tags():
     #op_done = True
     print "generating ctags file (at ~/tags)",
     thread_for_op_done()
-    gen_ctags("Verilog")
+    gen_ctags()
 
 
 def main():
@@ -159,7 +159,15 @@ def main():
     else:
         file_list_arr.append("")
 
-    gen_spv_tags()
+    if args["spv"]:
+        gen_spv_tags()
+
+    if args["v"]:
+        gen_verilog_tags();
+
+    if args["sv"]:
+        gen_systemverilog_tags()
+
     print "\nctags generation done..."
     #os.system('rm -f filelist.tmp')
     print "temp file removed..."
