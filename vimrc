@@ -908,6 +908,9 @@ let g:clang_library_path ="/home/dorong/bin/clang/lib"
 " not to use tags
 set complete-=t
 
+"search for visualy selected text
+vnoremap // y/<C-R>"<CR>
+
 if filereadable(glob("~/myvimrc")) 
     source ~/myvimrc
 endif
