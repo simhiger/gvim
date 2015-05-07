@@ -55,9 +55,6 @@
 [submodule "bundle/fileline"]
 	path = bundle/fileline
 	url = https://github.com/bogado/file-line
-[submodule "bundle/vim-snippets"]
-	path = bundle/vim-snippets
-	url = https://github.com/honza/vim-snippets.git
 [submodule "bundle/snipmate"]
 	path = bundle/snipmate
 	url = https://github.com/garbas/vim-snipmate.git
