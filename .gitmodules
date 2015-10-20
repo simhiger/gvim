@@ -64,3 +64,6 @@
 [submodule "bundle/emacsauto"]
 	path = bundle/emacsauto
 	url = https://github.com/vim-scripts/verilog_emacsauto.vim.git
+[submodule "bundle/vim-addon-mw-utils"]
+	path = bundle/vim-addon-mw-utils
+	url = https://github.com/MarcWeber/vim-addon-mw-utils.git

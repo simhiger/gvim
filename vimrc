@@ -345,7 +345,7 @@ function! InsertPythonPackage()
   
 endfunction
 
-autocmd! BufNewFile *.v,*.sv,*.svh call InsertVerilogPackage()
+autocmd! BufNewFile *.v,*.sv,*.svh,*.c,*.cpp,*.h call InsertVerilogPackage()
 
 "TODO change name
 function! InsertVerilogPackage() 
@@ -378,7 +378,6 @@ endfunction
 map Z :w<NL>
 "
 "
-map <F10> :co .<NL>:s/[!-~]/-/g<NL>:s/- -/---/g<NL>:s/-  -/----/g<NL>V<F2><esc>
 "
 "Menu items for Commenting and Un-Commenting code 
 amenu 20.435 &Edit.-SEP4- : 
@@ -440,6 +439,10 @@ endwhile
 endfunction 
 "-------------------------------------------------------------------
 "
+"
+"map <F10> :co .<NL>:s/[!-~]/-/g<NL>:s/- -/---/g<NL>:s/-  -/----/g<NL><ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call Comment(fl, ll)<CR>
+"map <F10> :co .<CR>:s/[!-~]/-/g<CR>:s/- -/---/g<CR>I#<esc>
+map <F10> :co .<CR><S-V>r-<esc>v<F2>yykP
 "
 "" Useful abbreviations
 "iab DG Doron Gombosh
@@ -823,10 +826,11 @@ let g:airline_section_b = "[" . hostname() . ']%{getcwd()}'
 set number "Show lines numbers
 highlight LineNr ctermfg=grey ctermbg=black guibg=black guifg=grey
 
-set tags=~/tags
+"set tags=~/tags
 
 if has("python")
-autocmd BufReadPost * call SET_TAGS_LOCATION()
+"autocmd BufReadPost * call SET_TAGS_LOCATION()
+autocmd BufEnter * call SET_TAGS_LOCATION()
 function! SET_TAGS_LOCATION()
 python << endpython
 import vim
@@ -910,6 +914,50 @@ set complete-=t
 
 "search for visualy selected text
 vnoremap // y/<C-R>"<CR>
+
+
+" ex command for toggling hex mode - define mapping if desired
+command -bar Hexmode call ToggleHex()
+
+" helper function to toggle hex mode
+function ToggleHex()
+  " hex mode should be considered a read-only operation
+  " save values for modified and read-only for restoration later,
+  " and clear the read-only flag for now
+  let l:modified=&mod
+  let l:oldreadonly=&readonly
+  let &readonly=0
+  let l:oldmodifiable=&modifiable
+  let &modifiable=1
+  if !exists("b:editHex") || !b:editHex
+    " save old options
+    let b:oldft=&ft
+    let b:oldbin=&bin
+    " set new options
+    setlocal binary " make sure it overrides any textwidth, etc.
+    silent :e " this will reload the file without trickeries 
+              "(DOS line endings will be shown entirely )
+    let &ft="xxd"
+    " set status
+    let b:editHex=1
+    " switch to hex editor
+    %!xxd
+  else
+    " restore old options
+    let &ft=b:oldft
+    if !b:oldbin
+      setlocal nobinary
+    endif
+    " set status
+    let b:editHex=0
+    " return to normal editing
+    %!xxd -r
+  endif
+  " restore values for modified and read only state
+  let &mod=l:modified
+  let &readonly=l:oldreadonly
+  let &modifiable=l:oldmodifiable
+endfunction
 
 if filereadable(glob("~/myvimrc")) 
     source ~/myvimrc
