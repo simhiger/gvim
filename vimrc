@@ -13,9 +13,12 @@ endif
 "Forget compatibility with Vi. Who cares. FIXME need to be checked
 set nocompatible
 
+if &diff
+else
 "call pathogen#runtime_append_all_bundles()
 call pathogen#infect()
 call pathogen#helptags()
+endif
 
 set visualbell              " enable the visual bell 
 
@@ -183,8 +186,11 @@ nmap <leader>ev :tabedit $MYVIMRC<cr>
 ""Saves time; maps the spacebar to colon
 ""nmap <space> :
 "" Make Space bar enter insert mode - I'm just used to that, sorry.
-" FIXME it's canceled somewhere, need to find out where
 map <Space> <Insert>
+
+" Make shift-insert work like in Xterm
+map <S-Insert> <MiddleMouse>
+map! <S-Insert> <MiddleMouse>
 "
 "Automatically change current directory to that of the file in the buffer
 "vim actually has a native function for this 'autochdir' but this is better
