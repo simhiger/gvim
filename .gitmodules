@@ -70,3 +70,9 @@
 [submodule "bundle/verilog_systemverilog"]
 	path = bundle/verilog_systemverilog
 	url = https://github.com/vhda/verilog_systemverilog.vim.git
+[submodule "bundle/rainbow_parentheses.vim"]
+	path = bundle/rainbow_parentheses.vim
+	url = https://github.com/kien/rainbow_parentheses.vim.git
+[submodule "bundle/rainbow"]
+	path = bundle/rainbow
+	url = https://github.com/kien/rainbow_parentheses.vim.git
