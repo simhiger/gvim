@@ -296,7 +296,11 @@ nmap <silent> <A-Right> :wincmd l<CR>
 ""au FocusLost * :wa
 "
 "" Backups
-set backupdir=~/.backup " backups
+if has('win32')
+   set backupdir=$HOME/backup " backups
+elseif has('unix')
+   set backupdir=$HOME/.backup " backups
+endif
 ""set directory=~/.vim/tmp/swap// " swap files
 set noswapfile
 set backup " enable backup
@@ -767,7 +771,11 @@ map <S-Right> <Esc>gt
 "endpython
 "endfunction
 "endif
-source ~/.vim/bundle/matchit/plugin/matchit.vim
+if has('win32')
+   source $HOME/vimfiles/bundle/matchit/plugin/matchit.vim
+elseif has('unix')
+   source $HOME/.vim/bundle/matchit/plugin/matchit.vim
+endif
 if exists('loaded_matchit')
 let b:match_ignorecase=0
 let b:match_words=
