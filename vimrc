@@ -13,20 +13,35 @@ endif
 "Forget compatibility with Vi. Who cares. FIXME need to be checked
 set nocompatible
 
-if &diff
-else
 "call pathogen#runtime_append_all_bundles()
-call pathogen#infect()
-call pathogen#helptags()
-endif
-
-set visualbell              " enable the visual bell 
+execute pathogen#infect()
+"call pathogen#interpose('bundle/YouCompleteMe')
+"call pathogen#interpose('bundle/snippets')
+"call pathogen#interpose('bundle/clang_complete')
+"call pathogen#interpose('bundle/emacsauto')
+"call pathogen#interpose('bundle/fileline')
+"call pathogen#interpose('bundle/grep')
+"call pathogen#interpose('bundle/matchit')
+"call pathogen#interpose('bundle/nerdtree')
+"call pathogen#interpose('bundle/snipmate')
+"call pathogen#interpose('bundle/svn')
+"call pathogen#interpose('bundle/syntastic')
+"call pathogen#interpose('bundle/systemverilog')
+"call pathogen#interpose('bundle/tabular')
+"call pathogen#interpose('bundle/tasklist')
+"call pathogen#interpose('bundle/tlib_vim')
+"call pathogen#interpose('bundle/vim-addon-mw-utils')
+"if &diff
+"else
+"call pathogen#interpose('bundle/python_mode')   
+"endif
+"call pathogen#helptags()
 
 "Enable filetypes
-filetype on
-filetype plugin on
-filetype indent on
 syntax on
+filetype plugin indent on
+
+set visualbell              " enable the visual bell 
 
 "Write the old file out when switching between files.
 "set autowrite
@@ -77,7 +92,7 @@ let g:pymode_options_max_line_length = 0
 "Skip errors and warnings
 "E.g. "E501,W002", "E2,W" (Skip all Warnings and Errors that starts with E2) and etc
 "let g:pymode_lint_ignore = "E501,W"
-"let g:pymode_lint_ignore = "E501"   "skip 'too long' warning
+let g:pymode_lint_ignore = "E501"   "skip 'too long' warning
 
 
 ""Set the color scheme. Change this to your preference.
@@ -461,6 +476,12 @@ map <F10> :co .<CR><S-V>r-<esc>v<F2>yykP
 ""TODO move to global file
 "au BufReadPost *.vsif so ~/bin/vsif.vim
 ""au BufReadPost *.sv so ~/.vim/syntax/systemverilog.vim
+let g:verilog_syntax_fold = "all"
+set foldmethod=syntax
+nnoremap <leader>i :VerilogFollowInstance<CR>
+nnoremap <leader>I :VerilogFollowPort<CR>
+nnoremap <leader>u :VerilogGotoInstanceStart<CR>
+
 "
 "" maximum of 20 tabs opened with -p
 set tabpagemax=12
@@ -471,7 +492,7 @@ set guitablabel=%t
 "
 ""svn 
 map <S-F11> :!svn lock %<CR>
-map <S-F12> :!svn ci % -m " "<CR>
+map <S-F12> :!svn ci % -m "Fixed a Bug"<CR>
 map <F12> :tabnew 
 map <F11> :close <CR>
 map <F9>  :MyGrep 
