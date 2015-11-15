@@ -36,7 +36,7 @@ def gen_ctags(lang="systemverilog"):
     global op_done
     global args
     print "generating ctags..."
-    cmd_str = '/home/dorong/bin/ctags/bin/ctags --language-force=%s -L filelist.tmp -f '%lang
+    cmd_str = '/home/dorong/bin/ctags/bin/ctags --extra=+q --fields=+i --language-force=%s -L filelist.tmp -f '%lang
     if args['o']:
         cmd_str += args['o']
     else:
