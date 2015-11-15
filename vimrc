@@ -76,6 +76,11 @@ map <leader>td <Plug>TaskList
 "pyflakes
 let g:pyflakes_use_quickfix = 0
 
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+
 "for python activate supertab completion - need to move to filetype detect file
 " this was old stuff from before python mode
 "au FileType python set omnifunc=pythoncomplete#Complete
@@ -1037,6 +1042,6 @@ function ToggleHex()
   let &modifiable=l:oldmodifiable
 endfunction
 
-if filereadable(glob("~/myvimrc")) 
-    source ~/myvimrc
+if filereadable(glob("$HOME/myvimrc")) 
+    source $HOME/myvimrc
 endif
