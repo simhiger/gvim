@@ -73,8 +73,8 @@ map <leader>td <Plug>TaskList
 "replaces grep - not installed
 "nmap <leader>a <Esc>:Ack!
 
-"pyflakes
-let g:pyflakes_use_quickfix = 0
+"pyflakes - removed, now it's a part of python-mode
+"let g:pyflakes_use_quickfix = 0
 
 au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
@@ -88,7 +88,8 @@ au Syntax * RainbowParenthesesLoadBraces
 "set completeopt=menuone,longest,preview
 let g:pymode_rope_lookup_project = 0 "fix a bug in python mode
 "for pymode plugin - remove red end of line 
-let g:pymode_options_max_line_length = 0
+"let g:pymode_options_max_line_length = 0
+let g:pymode_options_colorcolumn = 0
 "Turn on code completion support in the plugin
 "let g:pymode_rope_completion = 0
 "Turn on the rope script
@@ -424,6 +425,8 @@ vmap <F2>  <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call Comment(fl, 
 vmap <S-F2> <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call UnComment(fl, ll)<CR>
 autocmd FileType python,sh vmap <F2>  <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call Commentpy(fl, ll)<CR>
 autocmd FileType python,sh vmap <S-F2> <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call UnCommentpy(fl, ll)<CR>
+autocmd FileType vim vmap <F2>  <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call CommentVim(fl, ll)<CR>
+autocmd FileType vim vmap <S-F2> <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call UnCommentVim(fl, ll)<CR>
 "
 "Function for commenting a block of Visually selected text 
 function! Comment(fl, ll) 
@@ -474,6 +477,29 @@ let i=i+1
 endwhile 
 endfunction 
 "-------------------------------------------------------------------
+"Function for commenting a block of Visually selected text 
+function! CommentVim(fl, ll) 
+    let i=a:fl 
+let comment="\"" 
+while i<=a:ll 
+    let cl=getline(i) 
+let cl2=comment.cl 
+call setline(i, cl2) 
+let i=i+1 
+endwhile 
+endfunction 
+
+"Function for Un-Commenting a block of Visually selected text 
+function! UnCommentVim(fl, ll) 
+    let i=a:fl 
+let comment="\"" 
+while i<=a:ll 
+    let cl=getline(i) 
+let cl2=substitute(cl, "\"", "", "") 
+call setline(i, cl2) 
+let i=i+1 
+endwhile 
+endfunction 
 "
 "
 "map <F10> :co .<NL>:s/[!-~]/-/g<NL>:s/- -/---/g<NL>:s/-  -/----/g<NL><ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call Comment(fl, ll)<CR>
