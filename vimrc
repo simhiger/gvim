@@ -112,7 +112,9 @@ augroup END
 "colorscheme torte
 "Set font type and size. Depends on the resolution. Larger screens, prefer h20
 "set guifont=LucidaTypewriter\ \9
-"set guifont=Monospace\ \12
+set guifont=Monospace\ \10
+nmap <silent> + :let &guifont=substitute(&guifont, '\(\d\+\)', '\=submatch(1) + 1', '')<CR>
+nmap <silent> _ :let &guifont=substitute(&guifont, '\(\d\+\)', '\=(submatch(1) - 1)', '')<CR>
 
 "Taglist - not installed
 "let Tlist_Ctags_Cmd="C:/\ctags58/\ctags.exe"
@@ -171,6 +173,11 @@ set hlsearch
 set ignorecase
 set smartcase
 "
+" search with * without jump
+nnoremap * *``
+nnoremap * :keepjumps normal *``<cr>
+
+
 "Enable code folding - let's let the plugin control that
 "set foldenable
 "set foldmethod=indent
@@ -192,6 +199,7 @@ nnoremap <leader>v <C-w>v<C-w>l
 "
 "very usefull for the anoying dos/unix files - force to dos mode.
 map <leader>dos :e ++ff=dos<CR>
+map <leader>unix :e ++ff=unix<CR>
 "the next one actually changes the file. save and check in after you do that
 "for permanent fix.
 map <leader>dos2unix :%s/\r\(\n\)/\1/g<CR>
@@ -295,7 +303,7 @@ map! <C-V> <Esc><C-V>
 if has("autocmd")
  augroup myvimrchooks
   au!
-  autocmd bufwritepost .vimrc source ~/.vimrc
+  autocmd bufwritepost vimrc source ~/.vim/vimrc
  augroup END
 endif
 "
@@ -376,7 +384,7 @@ function! InsertPythonPackage()
     let result = append(8, "Description  : ") 
     let result = append(9, "Notes        : ") 
     let result = append(10, "---------------------------------------------------------------------------") 
-    let result = append(11, "Copyright 2015 (c) Satixfy Ltd") 
+    let result = append(11, "Copyright 2016 (c) Satixfy Ltd") 
     let result = append(12, "---------------------------------------------------------------------------*/")
     let result = append(13, "'''")     
   
@@ -400,7 +408,7 @@ function! InsertVerilogPackage()
 	 let result = append(8, "// Notes        	: ")
 	 let result = append(9, "// Version			: 0.1")
 	 let result = append(10, "// ---------------------------------------------------------------------------")
-	 let result = append(11, "// Copyright 2015 (c) Satixfy Ltd")
+	 let result = append(11, "// Copyright 2016 (c) Satixfy Ltd")
 	 let result = append(12, "// Confidential Proprietary ")
 	 let result = append(13, "// ---------------------------------------------------------------------------")
 endfunction
@@ -423,8 +431,8 @@ amenu Edit.UnComment <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call Un
 "" Insert # comments
 vmap <F2>  <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call Comment(fl, ll)<CR> 
 vmap <S-F2> <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call UnComment(fl, ll)<CR>
-autocmd FileType python,sh vmap <F2>  <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call Commentpy(fl, ll)<CR>
-autocmd FileType python,sh vmap <S-F2> <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call UnCommentpy(fl, ll)<CR>
+autocmd FileType python,sh,make vmap <F2>  <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call Commentpy(fl, ll)<CR>
+autocmd FileType python,sh,make vmap <S-F2> <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call UnCommentpy(fl, ll)<CR>
 autocmd FileType vim vmap <F2>  <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call CommentVim(fl, ll)<CR>
 autocmd FileType vim vmap <S-F2> <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call UnCommentVim(fl, ll)<CR>
 "
@@ -932,7 +940,7 @@ import os
 def PyDiff():
 	file1 = vim.buffers[1].name
 	file2 = vim.buffers[2].name
-	result = os.popen("~dorong/largediff.py "+file1+" "+file2)
+	result = os.popen("~dorong/scripts/largediff.py "+file1+" "+file2)
 	for line in result:
 		print line
 
@@ -952,7 +960,7 @@ endfunction
 endif
 
 function! ElogSettings()
-   colorscheme evening
+   "colorscheme evening
    hi Cursorline term=none cterm=none ctermbg=Green guibg=darkred
    hi statusline guibg=darkred
    augroup CursorLine
@@ -1026,10 +1034,10 @@ vnoremap // y/<C-R>"<CR>
 
 
 " ex command for toggling hex mode - define mapping if desired
-command -bar Hexmode call ToggleHex()
+command! -bar Hexmode call ToggleHex()
 
 " helper function to toggle hex mode
-function ToggleHex()
+function! ToggleHex()
   " hex mode should be considered a read-only operation
   " save values for modified and read-only for restoration later,
   " and clear the read-only flag for now
@@ -1067,6 +1075,133 @@ function ToggleHex()
   let &readonly=l:oldreadonly
   let &modifiable=l:oldmodifiable
 endfunction
+
+"let &errorformat="%f:%l:%c: %t%*[^:]:%m,%f:%l: %t%*[^:]:%m," . &errorformat
+"let &errorformat="Warning-%t%* %m" . &errorformat
+
+" Definitions for errorformat
+" {{{
+function! VerilogErrorFormat(...)
+  " Choose tool
+" if (a:0 == 0)
+"   let l:tool = inputlist([
+"         \"1. VCS",
+"         \"2. Modelsim",
+"         \"3. iverilog",
+"         \"4. cver",
+"         \"5. Leda",
+"         \])
+"   echo "\n"
+"   if (l:tool == 1)
+"     let l:tool = "vcs"
+"   elseif (l:tool == 2)
+"     let l:tool = "msim"
+"   elseif (l:tool == 3)
+"     let l:tool = "iverilog"
+"   elseif (l:tool == 4)
+"     let l:tool = "cver"
+"   elseif (l:tool == 5)
+"     let l:tool = "leda"
+"   else
+"     let l:tool = "iverilog"
+"   endif
+" else
+"   let l:tool = "vcs"
+" endif
+"
+" " Choose error level
+" if (a:0 <= 1)
+"   if (l:tool == "vcs")
+"     let l:mode = inputlist([
+"           \"1. check all",
+"           \"2. ignore lint",
+"           \"3. ignore lint and warnings"
+"           \])
+"     echo "\n"
+"   elseif (
+"     \ l:tool == "msim" ||
+"     \ l:tool == "cver"
+"     \ )
+"     let l:mode = inputlist([
+"           \"1. check all",
+"           \"2. ignore warnings"
+"           \])
+"     echo "\n"
+"   endif
+" else
+"   let l_mode = 1
+" endif
+  let l:tool = "vcs"
+  let l:mode = 1
+
+  if (l:tool == "vcs")
+    " Error messages
+    set errorformat=%E%trror-\[%.%\\+\]\ %m
+    set errorformat+=%C%.%#line\ %l\ of\ file%.%#
+    set errorformat+=%C%m\"%f\"\\,\ %l%.%#
+    set errorformat+=%C%f\\,\ %l
+    set errorformat+=%C\ \ \"%f\"%.%#
+    set errorformat+=%C%\\s%\\+%l:\ %m
+    set errorformat+=%C%m\"%f\"\\,%.%#
+    set errorformat+=%Z%p^                      "Column pointer
+    set errorformat+=%C%m                       "Catch all rule
+    set errorformat+=%Z%m                       "Finalization messages
+    set errorformat+=%-IParsing\ %m
+    set errorformat+=%-IBack\ to\ file\ '%f'%m
+    "set errorformat+=%C\ \ \"%f\",
+    "set errorformat+=%C\ \ %l%.%#                       "Catch all rule
+    " Warning messages
+    if (l:mode <= 2)
+      set errorformat+=%W%tarning-\[%.%\\+]\\$
+      set errorformat+=%-W%tarning-[LCA_FEATURES_ENABLED]\ Usage\ warning    "Ignore LCA enabled warning
+      set errorformat+=%W%tarning-\[%.%\\+\]\ %m
+    endif
+    " Lint message
+    if (l:mode <= 1)
+      set errorformat+=%I%tint-\[%.%\\+\]\ %m
+      set errorformat+=%I%tote-\[%.%\\+\]\ %m
+      "set errorformat+=%IIgnored\ %m
+      "set errorformat+=%C\"%f\",
+    endif
+    echo "Selected VCS errorformat"
+    "TODO Add support for:
+    "Error-[SE] Syntax error
+    "  Following verilog source has syntax error :
+    "  "../../rtl_v/anadigintf/anasoftramp.v", 128: token is 'else'
+    "          else
+  endif
+" if (l:tool == "msim")
+"   " Error messages
+"   set errorformat=\*\*\ Error:\ %f(%l):\ %m
+"   " Warning messages
+"   if (l:mode <= 1)
+"     set errorformat+=\*\*\ Warning:\ \[\%n\]\ %f(%l):\ %m
+"   endif
+"   echo "Selected Modelsim errorformat"
+" endif
+" if (l:tool == "iverilog")
+"   set errorformat=%f:%l:\ %m
+"   echo "Selected iverilog errorformat"
+" endif
+" if (l:tool == "cver")
+"   " Error messages
+"   set errorformat=\*\*%f(%l)\ ERROR\*\*\ \[%n\]\ %m
+"   " Warning messages
+"   if (l:mode <= 1)
+"     set errorformat+=\*\*%f(%l)\ WARN\*\*\ \[%n\]\ %m,\*\*\ WARN\*\*\ \[\%n\]\ %m
+"   endif
+"   echo "Selected cver errorformat"
+" endif
+" if (l:tool == "leda")
+"   " Simple errorformat:
+"   set errorformat=%f:%l:\ %.%#\[%t%.%#\]\ %m
+"   "TODO Review -> Multiple line errorformat:
+"   "set errorformat=%A\ %#%l:%.%#,%C\ \ \ \ \ \ \ \ %p^^%#,%Z%f:%l:\ %.%#[%t%.%#]\ %m
+"   echo "Selected Leda errorformat"
+" endif
+endfunction
+" }}}
+map <F5> :call VerilogErrorFormat()<CR>:cfile %<CR>
 
 if filereadable(glob("$HOME/myvimrc")) 
     source $HOME/myvimrc
