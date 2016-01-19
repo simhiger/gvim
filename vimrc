@@ -1201,7 +1201,7 @@ function! VerilogErrorFormat(...)
 " endif
 endfunction
 " }}}
-map <F5> :call VerilogErrorFormat()<CR>:cfile %<CR>
+map <F5> :call VerilogErrorFormat()<CR>:cfile %<CR>:cw<CR>
 
 if filereadable(glob("$HOME/myvimrc")) 
     source $HOME/myvimrc
