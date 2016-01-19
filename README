@@ -2,7 +2,8 @@ first time use:
 git clone https://github.com/gombosh/dotvim.git dotvim
 cd dotvim
 git submodule update --init --recursive
-git checkout 5949b89 bundle/fileline/plugin/file_line.vim //fix issue with fileline
+cd bundle/fileline/plugin
+git checkout 5949b89 file_line.vim //fix issue with fileline
 link your ~/.vim directory to dotvim: ln -s dotvim .vim
 reomve any ~/.vimrc and ~/.gvimrc files you have.
 
