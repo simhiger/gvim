@@ -73,3 +73,6 @@
 [submodule "bundle/rainbow"]
 	path = bundle/rainbow
 	url = https://github.com/kien/rainbow_parentheses.vim.git
+[submodule "bundle/asterisk"]
+	path = bundle/asterisk
+	url = https://github.com/haya14busa/vim-asterisk

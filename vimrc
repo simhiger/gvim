@@ -173,10 +173,6 @@ set hlsearch
 set ignorecase
 set smartcase
 "
-" search with * without jump
-nnoremap * *``
-nnoremap * :keepjumps normal *``<cr>
-
 
 "Enable code folding - let's let the plugin control that
 "set foldenable
