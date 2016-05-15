@@ -999,6 +999,8 @@ let  g:C_UseTool_doxygen = 'yes'
 
 "make vim detect filenames with : so it can open the line and columb
 set isfname+=:
+"make vim detect filenames with {} so it can open a filename with env var ${WS}
+set isfname+={,}
 
 "autocmd BufReadPost *.log silent %s!,!:!g
 "autocmd BufReadPost *.log silent %s!|!:!g
