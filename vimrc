@@ -123,7 +123,7 @@ endif
 "Tagbar
 "let g:tagbar_ctags_bin = "C:/ctags58/ctags.exe"
 if has('win32')
-   let g:tagbar_ctags_bin = 'C:/ctags'
+   let g:tagbar_ctags_bin = 'C:/ctags/ctags.exe'
 else
    let g:tagbar_ctags_bin = '/home/dorong/bin/ctags/bin/ctags'
 endif
