@@ -112,14 +112,21 @@ augroup END
 "colorscheme torte
 "Set font type and size. Depends on the resolution. Larger screens, prefer h20
 "set guifont=LucidaTypewriter\ \9
-set guifont=Monospace\ \10
-nmap <silent> + :let &guifont=substitute(&guifont, '\(\d\+\)', '\=submatch(1) + 1', '')<CR>
-nmap <silent> _ :let &guifont=substitute(&guifont, '\(\d\+\)', '\=(submatch(1) - 1)', '')<CR>
+if !has('win32')
+   set guifont=Monospace\ \10
+   nmap <silent> + :let &guifont=substitute(&guifont, '\(\d\+\)', '\=submatch(1) + 1', '')<CR>
+   nmap <silent> _ :let &guifont=substitute(&guifont, '\(\d\+\)', '\=(submatch(1) - 1)', '')<CR>
+endif
 
 "Taglist - not installed
 "let Tlist_Ctags_Cmd="C:/\ctags58/\ctags.exe"
 "Tagbar
-let g:tagbar_ctags_bin = '/home/dorong/bin/ctags/bin/ctags'
+"let g:tagbar_ctags_bin = "C:/ctags58/ctags.exe"
+if has('win32')
+   let g:tagbar_ctags_bin = 'C:/ctags'
+else
+   let g:tagbar_ctags_bin = '/home/dorong/bin/ctags/bin/ctags'
+endif
 
 ""Tab stuff http://vimcasts.org/episodes/tabs-and-spaces/
 set tabstop=3 "the width of the tab character (in spaces)
@@ -259,8 +266,10 @@ set so=5
 "" Make history buffer larger default 20
 set hi=100
 "
-"" Make shell commands work faster
-set shell=csh\ -f
+if !has('win32')
+   "" Make shell commands work faster
+   set shell=csh\ -f
+endif
 "
 "" suffixesadd - used when searching for a file with gf
 set suffixesadd=.v,.py,.sv,.c,.cpp,.h,.svh
@@ -299,7 +308,11 @@ map! <C-V> <Esc><C-V>
 if has("autocmd")
  augroup myvimrchooks
   au!
-  autocmd bufwritepost vimrc source ~/.vim/vimrc
+  if has('win32')
+     autocmd bufwritepost vimrc source $HOME/vimfiles/vimrc
+  elseif has('unix')
+     autocmd bufwritepost vimrc source $HOME/.vim/vimrc
+  endif
  augroup END
 endif
 "
@@ -376,7 +389,11 @@ function! InsertPythonPackage()
     let username = expand("$USER") 
     let result = append(6, "Developers   :  " . username) 
     let date = strftime("%a %b %d, %Y  %I:%M%p")
-    let result = append(7, "Created      : " . date) 
+    if has('win32')
+       let result = append(7, "Created      : ") 
+    elseif has('unix')
+       let result = append(7, "Created      : " . date) 
+    endif
     let result = append(8, "Description  : ") 
     let result = append(9, "Notes        : ") 
     let result = append(10, "---------------------------------------------------------------------------") 
