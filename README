@@ -19,7 +19,7 @@ to update files use:
 git pull
 
 to update plugins:
-git submodule update --init --recursive
+git pull --recurse-submodules
 
 to check in use 
 git add .

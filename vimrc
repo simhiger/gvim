@@ -1040,6 +1040,9 @@ let g:clang_auto_select = 2
 "let g:clang_jumpto_declaration_key = '<C-.>'
 "let g:clang_jumpto_back_key = '<C-,>'
 let g:clang_library_path ="/home/dorong/bin/clang/lib"
+if has('win32')
+   let g:clang_complete_loaded = 1
+endif
 "
 " not to use tags
 set complete-=t
