@@ -266,10 +266,10 @@ set so=5
 "" Make history buffer larger default 20
 set hi=100
 "
-if !has('win32')
-   "" Make shell commands work faster
-   set shell=csh\ -f
-endif
+"if !has('win32')
+"   "" Make shell commands work faster
+"   set shell=csh\ -f
+"endif
 "
 "" suffixesadd - used when searching for a file with gf
 set suffixesadd=.v,.py,.sv,.c,.cpp,.h,.svh
