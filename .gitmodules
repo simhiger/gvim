@@ -76,3 +76,6 @@
 [submodule "bundle/asterisk"]
 	path = bundle/asterisk
 	url = https://github.com/haya14busa/vim-asterisk
+[submodule "bundle/vim-snippets"]
+	path = bundle/vim-snippets
+	url = https://github.com/honza/vim-snippets.git
