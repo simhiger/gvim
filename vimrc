@@ -34,7 +34,7 @@ execute pathogen#infect()
 "else
 "call pathogen#interpose('bundle/python_mode')   
 "endif
-"call pathogen#helptags()
+call pathogen#helptags()
 
 "Enable filetypes
 syntax on
