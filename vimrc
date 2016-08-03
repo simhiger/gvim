@@ -1227,11 +1227,12 @@ map <F5> :call VerilogErrorFormat()<CR>:cfile %<CR>:cw<CR>
 "----------
 " CSCOPE "
 "----------
-if has('win32')
-   let g:cscope_cmd = '$HOME/vimfiles/bin/cscope.exe'
-else
-   let g:cscope_cmd = '$HOME/.vim/bin/cscope.exe'
-endif
+"if has('win32')
+"   let g:cscope_cmd = "U:/vimfiles/bin/cscope.exe"
+"else
+"   let g:cscope_cmd = '$HOME/.vim/bin/cscope.exe'
+"endif
+let g:cscope_interested_files = '\.c$\|\.cpp$\|\.h$\|\.hpp'
 
 nnoremap <leader>fa :call CscopeFindInteractive(expand('<cword>'))<CR>
 nnoremap <leader>l :call ToggleLocationList()<CR>

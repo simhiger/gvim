@@ -11,15 +11,17 @@ create a ~/myvimrc file to overide/add functionality.
 I think in the minimum it should contain the following line:
 colorscheme torte
 
-not necesserily needed:
-find .vim/ -name "*.vim" -exec dos2unix {} \;
-find .vim/ -name "*.sh" -exec dos2unix {} \;
 
 to update files use:
 git pull
 
 to update plugins:
 git pull --recurse-submodules
+
+to gen new plugins:
+git submodule update --init --recursive
+
+yes I know, I should have a script which updates everything.
 
 to check in use 
 git add .
@@ -29,3 +31,11 @@ git push
 tagbar instead of taglist
 airline changed to full path
 solarise color scheme not tested
+
+CSCOPE SUPPORT ADDED!!!!
+to use it you must have the cscope executable in your "PATH".
+for windows the file is a part of the repository at "vimfiles\bin" so just add it to "PATH".
+
+not needed:
+find .vim/ -name "*.vim" -exec dos2unix {} \;
+find .vim/ -name "*.sh" -exec dos2unix {} \;
