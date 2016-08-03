@@ -9,6 +9,9 @@ if v:version < 700
 	finish
 endif
 
+"let g:exvim_custom_path='c:/exvim/'
+"source c:/exvim/.vimrc
+
 "Forget compatibility with Vi. Who cares. FIXME need to be checked
 set nocompatible
 
@@ -34,7 +37,7 @@ execute pathogen#infect()
 "else
 "call pathogen#interpose('bundle/python_mode')   
 "endif
-"call pathogen#helptags()
+call pathogen#helptags()
 
 "Enable filetypes
 syntax on
@@ -123,7 +126,7 @@ endif
 "Tagbar
 "let g:tagbar_ctags_bin = "C:/ctags58/ctags.exe"
 if has('win32')
-   let g:tagbar_ctags_bin = 'C:/ctags/ctags.exe'
+   let g:tagbar_ctags_bin = '$HOME/vimfiles/bin/ctags.exe'
 else
    let g:tagbar_ctags_bin = '/home/dorong/bin/ctags/bin/ctags'
 endif
@@ -1220,6 +1223,36 @@ function! VerilogErrorFormat(...)
 endfunction
 " }}}
 map <F5> :call VerilogErrorFormat()<CR>:cfile %<CR>:cw<CR>
+
+"----------
+" CSCOPE "
+"----------
+if has('win32')
+   let g:cscope_cmd = '$HOME/vimfiles/bin/cscope.exe'
+else
+   let g:cscope_cmd = '$HOME/.vim/bin/cscope.exe'
+endif
+
+nnoremap <leader>fa :call CscopeFindInteractive(expand('<cword>'))<CR>
+nnoremap <leader>l :call ToggleLocationList()<CR>
+
+" s: Find this C symbol
+nnoremap  <leader>fs :call CscopeFind('s', expand('<cword>'))<CR>
+" g: Find this definition
+nnoremap  <leader>fg :call CscopeFind('g', expand('<cword>'))<CR>
+" d: Find functions called by this function
+nnoremap  <leader>fd :call CscopeFind('d', expand('<cword>'))<CR>
+" c: Find functions calling this function
+nnoremap  <leader>fc :call CscopeFind('c', expand('<cword>'))<CR>
+" t: Find this text string
+nnoremap  <leader>ft :call CscopeFind('t', expand('<cword>'))<CR>
+" e: Find this egrep pattern
+nnoremap  <leader>fe :call CscopeFind('e', expand('<cword>'))<CR>
+" f: Find this file
+nnoremap  <leader>ff :call CscopeFind('f', expand('<cword>'))<CR>
+" i: Find files #including this file
+nnoremap  <leader>fi :call CscopeFind('i', expand('<cword>'))<CR>
+
 
 if filereadable(glob("$HOME/myvimrc")) 
     source $HOME/myvimrc
