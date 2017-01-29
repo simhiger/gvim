@@ -400,7 +400,7 @@ function! InsertPythonPackage()
     let result = append(8, "Description  : ") 
     let result = append(9, "Notes        : ") 
     let result = append(10, "---------------------------------------------------------------------------") 
-    let result = append(11, "Copyright 2016 (c) Satixfy Ltd") 
+    let result = append(11, "Copyright 2017 (c) Satixfy Ltd") 
     let result = append(12, "---------------------------------------------------------------------------*/")
     let result = append(13, "'''")     
   
@@ -424,7 +424,7 @@ function! InsertVerilogPackage()
 	 let result = append(8, "// Notes        	: ")
 	 let result = append(9, "// Version			: 0.1")
 	 let result = append(10, "// ---------------------------------------------------------------------------")
-	 let result = append(11, "// Copyright 2016 (c) Satixfy Ltd")
+	 let result = append(11, "// Copyright 2017 (c) Satixfy Ltd")
 	 let result = append(12, "// Confidential Proprietary ")
 	 let result = append(13, "// ---------------------------------------------------------------------------")
 endfunction
@@ -1257,3 +1257,4 @@ nnoremap  <leader>fi :call CscopeFind('i', expand('<cword>'))<CR>
 if filereadable(glob("$HOME/myvimrc")) 
     source $HOME/myvimrc
 endif
+autocmd! BufNewFile *.py call InsertPythonPackage() 
