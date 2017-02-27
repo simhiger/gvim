@@ -15,6 +15,8 @@ endif
 "Forget compatibility with Vi. Who cares. FIXME need to be checked
 set nocompatible
 
+autocmd! BufEnter *
+
 "call pathogen#runtime_append_all_bundles()
 execute pathogen#infect()
 "call pathogen#interpose('bundle/YouCompleteMe')
@@ -946,6 +948,31 @@ def set_tags_location():
         splitted_pwd = splitted_pwd[:-1]
 
 set_tags_location()
+endpython
+endfunction
+
+autocmd BufEnter * call SET_WS()
+function! SET_WS()
+python << endpython
+import vim
+import os
+def set_ws():
+  if os.getenv("WS"):
+     return
+
+  pwd = os.getcwd()
+  if "users" in pwd:
+    splitted_pwd = pwd.split("/")
+    while "users" in splitted_pwd[:-2]:
+      workdir_path = "/".join(splitted_pwd)
+      workdir_params = workdir_path+"/.params"
+      if os.path.exists(workdir_params):
+        os.environ["WS"] = workdir_path
+        break
+      else:
+        splitted_pwd = splitted_pwd[:-1]
+
+set_ws()
 endpython
 endfunction
 
