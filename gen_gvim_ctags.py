@@ -1,4 +1,4 @@
-#!/home/dorong/bin/python/bin/python
+#!/usr/bin/python
 '''
 -------------------------------------------------------------------------
 File name    : /raid/users/dorong/gen_gvim_ctags.py
@@ -30,6 +30,7 @@ parser.add_argument('-e', help='gen tags to use with emacs (instead of vim)',act
 parser.add_argument('-sv', help='gen tags to systemverilog project',action="store_true")
 parser.add_argument('-spv', help='gen tags to spv project',action="store_true")
 parser.add_argument('-v', help='gen tags to verilog project',action="store_true")
+parser.add_argument('-nc', help='gen tags to verilog/systemverilog cadance project',action="store_true")
 args = vars(parser.parse_args())
 
 def gen_ctags(lang="systemverilog"):
@@ -85,6 +86,7 @@ def gen_systemverilog_tags():
     thread_for_op_done()
     gen_ctags("systemverilog")
 
+
 def gen_spv_tags():
     global file_list_arr
     print "using file :"+file_list_arr[0]
@@ -107,6 +109,38 @@ def gen_spv_tags():
     print "generating ctags file (at ~/tags)",
     thread_for_op_done()
     gen_ctags("C++")
+
+def gen_nc_tags():
+    print "using file :"+args["i"]
+    print "creating temp file..."
+
+    thread_for_op_done()
+    with open(args["i"],"r") as filelist:
+        filelist_lines = filelist.readlines()
+        os.system("\\rm -rf filelist.tmp")
+        for line in filelist_lines:
+            try:
+                line = line.strip()
+                print "HANDLING:",line
+                if line[0]=="/" and line[1]!="/":
+                    os.system('echo %s >> filelist.tmp'%line)
+                elif "incdir" in line:
+                    print('find %s -name "*.v" >> filelist.tmp'%(line.split("+")[-1]))
+                    os.system('find %s -name "*.v" >> filelist.tmp'%(line.split("+")[-1]))
+                    os.system('find %s -name "*.sv" >> filelist.tmp'%(line.split("+")[-1]))
+                    os.system('find %s -name "*.svh" >> filelist.tmp'%(line.split("+")[-1]))
+                else:
+                    print "skipping",line
+                    continue
+            except:
+                print "skipping",line
+                continue
+
+    os.system('cat filelist.tmp')
+    op_done = True
+    print "generating ctags file (at ~/tags)",
+    thread_for_op_done()
+    gen_ctags("verilog")
 
 def gen_verilog_tags():
     global file_list_arr
@@ -167,6 +201,9 @@ def main():
 
     if args["sv"]:
         gen_systemverilog_tags()
+
+    if args["nc"]:
+        gen_nc_tags()
 
     print "\nctags generation done..."
     #os.system('rm -f filelist.tmp')
