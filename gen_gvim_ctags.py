@@ -37,7 +37,7 @@ def gen_ctags(lang="systemverilog"):
     global op_done
     global args
     print "generating ctags..."
-    cmd_str = '/home/dorong/bin/ctags/bin/ctags --extra=+q --fields=+i --language-force=%s -L filelist.tmp -f '%lang
+    cmd_str = 'ctags --options=/home/dorong/.vim/bin/.ctags --extra=+q --fields=+i --language-force=%s -L filelist.tmp -f '%lang
     if args['o']:
         cmd_str += args['o']
     else:
@@ -140,7 +140,7 @@ def gen_nc_tags():
     op_done = True
     print "generating ctags file (at ~/tags)",
     thread_for_op_done()
-    gen_ctags("verilog")
+    gen_ctags("systemverilog")
 
 def gen_verilog_tags():
     global file_list_arr
