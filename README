@@ -1,3 +1,7 @@
+This is a plugin suite for gvim.
+developed on 7.4 but should work just the same on 8.0 and on any older version (assuming the plugin is supported).
+it should also make the adjustments for DOS/UNIX automatically.
+
 first time use:
 git clone https://github.com/gombosh/dotvim.git dotvim
 cd dotvim
