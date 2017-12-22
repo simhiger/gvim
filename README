@@ -3,18 +3,25 @@ developed on 7.4 but should work just the same on 8.0 and on any older version (
 it should also make the adjustments for DOS/UNIX automatically.
 
 first time use:
-git clone https://github.com/gombosh/dotvim.git dotvim
-cd dotvim
+go to your home directory (can be found by using ":echo $HOME" from gvim).
+usually for windows: C:\Users/<username> linux: /home/<username>
+
+windows:
+git clone https://github.com/gombosh/dotvim.git vimrc
+cd vimrc
 git submodule update --init --recursive
-cd bundle/fileline/plugin
-git checkout 5949b89 file_line.vim //fix issue with fileline
-link your ~/.vim directory to dotvim: ln -s dotvim .vim
+reomve any _vimrc and _gvimrc files you have.
+create a myvimrc file to overide/add functionality.
+
+linux:
+git clone https://github.com/gombosh/dotvim.git .vim
+cd .vim
+git submodule update --init --recursive
 reomve any ~/.vimrc and ~/.gvimrc files you have.
-
 create a ~/myvimrc file to overide/add functionality.
-I think in the minimum it should contain the following line:
-colorscheme torte
 
+I think in the minimum that the local "myvimrc" should contain the following line:
+colorscheme torte
 
 to update files use:
 git pull
