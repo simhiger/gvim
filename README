@@ -7,7 +7,7 @@ go to your home directory (can be found by using ":echo $HOME" from gvim).
 usually for windows: C:\Users/<username> linux: /home/<username>
 
 windows:
-git clone https://github.com/gombosh/dotvim.git vimfiles
+git clone https://github.com/dimarog/gvim.git vimfiles
 cd vimrc
 git submodule update --init --recursive
 reomve any _vimrc and _gvimrc files you have.
