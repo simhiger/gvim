@@ -14,7 +14,7 @@ reomve any _vimrc and _gvimrc files you have.
 create a myvimrc file to overide/add functionality.
 
 linux:
-git clone https://github.com/gombosh/dotvim.git .vim
+git clone https://github.com/dimarog/gvim.git .vim
 cd .vim
 git submodule update --init --recursive
 reomve any ~/.vimrc and ~/.gvimrc files you have.
