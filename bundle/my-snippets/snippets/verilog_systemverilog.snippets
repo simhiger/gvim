@@ -59,9 +59,20 @@ snippet al
 	end
 # Module block
 snippet mod
-	module ${1:module_name} (${2});
+	module ${1:module_name} 
+		(${2}
+		/*AUTOOUTPUT*/
+		/*AUTOINPUT*/
+		);
 		${0}
+
 	endmodule
+
+	// Local Variables:
+	// verilog-library-directories:("." ".")
+	// verilog-auto-output-ignore-regexp: "" 
+	// verilog-library-extensions:(".sv" ".v")
+	// END:
 
 # Foreach Loop
 snippet fe
