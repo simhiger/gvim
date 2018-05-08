@@ -19,6 +19,7 @@ autocmd! BufEnter *
 
 "call pathogen#runtime_append_all_bundles()
 execute pathogen#infect()
+call pathogen#infect()
 "call pathogen#interpose('bundle/YouCompleteMe')
 "call pathogen#interpose('bundle/snippets')
 "call pathogen#interpose('bundle/clang_complete')
@@ -92,6 +93,7 @@ au Syntax * RainbowParenthesesLoadBraces
 "let g:SuperTabDefaultCompletionType = "context"
 "set completeopt=menuone,longest,preview
 let g:pymode_rope_lookup_project = 0 "fix a bug in python mode
+let g:pymode_rope_complete_on_dot = 0 "turn off auto-completion when pressing period button
 "for pymode plugin - remove red end of line 
 "let g:pymode_options_max_line_length = 0
 let g:pymode_options_colorcolumn = 0
@@ -130,7 +132,8 @@ endif
 if has('win32')
    let g:tagbar_ctags_bin = '$HOME/vimfiles/bin/ctags.exe'
 else
-   let g:tagbar_ctags_bin = '/home/dorong/bin/ctags/bin/ctags'
+   "let g:tagbar_ctags_bin = '$HOME/bin/ctags_install/bin/ctags'
+   let g:tagbar_ctags_bin = 'usr/bin/ctags'
 endif
 
 ""Tab stuff http://vimcasts.org/episodes/tabs-and-spaces/
@@ -332,6 +335,16 @@ nmap <silent> <A-Down> :wincmd j<CR>
 nmap <silent> <A-Left> :wincmd h<CR>
 nmap <silent> <A-Right> :wincmd l<CR>
 
+let g:ctrlp_cmd='CtrlP /vobs/cores/modemss/streamer_wmss/dtr'
+"ctrlp path example
+"let g:ctrlp_root_markers = ['/vobs/cores/modemss/streamer_wmss/dtr']
+"let g:ctrlp_root_markers = ['/vobs/cores/modemss/streamer_wmss/dtr/sub/sc_common/sub/dan_dfe/sub/phy_fe_logger']
+"let g:ctrlp_user_command = 'find %s -type f | grep -v -P "\.jpg$|/tmp/"'
+"let g:ctrlp_user_command = "find %s -type f | egrep -v '/\.(git|hg|svn)|solr|tmp/' | egrep -v '\.(png|exe|jpg|gif|jar|class|swp|swo|log|gitkep|keepme|so|o)$'"
+"Keep caches between sessions - f5 to refresh
+let g:ctrlp_clear_cache_on_exit = 0
+""
+let g:ctrlp_working_path_mode = '' 
 "
 ""Spelling corrects. Just for example. Add yours below.
 "iab teh the
@@ -384,7 +397,7 @@ autocmd! BufNewFile *.py call InsertPythonPackage()
 function! InsertPythonPackage() 
     let dir = getcwd() 
     
-    let result = append(0,"#!/usr/local/bin/python2.7")
+    let result = append(0,"#!/usr/bin/python")
     let result = append(1, "'''")     
     let result = append(2, "-------------------------------------------------------------------------") 
     let filename = expand("%") 
@@ -449,12 +462,17 @@ amenu Edit.UnComment <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call Un
 "" Insert # comments
 vmap <F2>  <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call Comment(fl, ll)<CR> 
 vmap <S-F2> <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call UnComment(fl, ll)<CR>
-autocmd BufEnter *.c,*.h,*.cpp,*.v,*.vh,*.sv,*.svi,*.svh vmap <F2>  <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call Comment(fl, ll)<CR>
-autocmd BufEnter *.c,*.h,*.cpp,*.v,*.vh,*.sv,*.svi,*.svh vmap <S-F2> <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call UnComment(fl, ll)<CR>
-autocmd BufEnter *.vim,*.vmap <F2>  <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call CommentVim(fl, ll)<CR>
-autocmd BufEnter *.vim,*.vmap <S-F2> <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call UnCommentVim(fl, ll)<CR>
-autocmd BufEnter *.py,*.sh,*.mk,*.tcl vmap <F2>  <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call Commentpy(fl, ll)<CR>
-autocmd BufEnter *.py,*.sh,*.mk,*.tcl vmap <S-F2> <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call UnCommentpy(fl, ll)<CR>
+"autocmd BufEnter *.c,*.h,*.cpp,*.v,*.vh,*.sv,*.svi,*.svh vmap <F2>  <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call Comment(fl, ll)<CR>
+"autocmd BufEnter *.c,*.h,*.cpp,*.v,*.vh,*.sv,*.svi,*.svh vmap <S-F2> <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call UnComment(fl, ll)<CR>
+"autocmd BufEnter *.vim,*.vmap <F2>  <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call CommentVim(fl, ll)<CR>
+"autocmd BufEnter *.vim,*.vmap <S-F2> <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call UnCommentVim(fl, ll)<CR>
+"autocmd BufEnter *.py,*.sh,*.mk,*.tcl vmap <F2>  <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call Commentpy(fl, ll)<CR>
+"autocmd BufEnter *.py,*.sh,*.mk,*.tcl vmap <S-F2> <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call UnCommentpy(fl, ll)<CR>
+
+autocmd FileType python,sh,make vmap <F2>  <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call Commentpy(fl, ll)<CR>
+autocmd FileType python,sh,make vmap <S-F2> <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call UnCommentpy(fl, ll)<CR>
+autocmd FileType vim vmap <F2>  <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call CommentVim(fl, ll)<CR>
+autocmd FileType vim vmap <S-F2> <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call UnCommentVim(fl, ll)<CR>
 "
 "Function for commenting a block of Visually selected text 
 function! Comment(fl, ll) 
@@ -535,12 +553,7 @@ endfunction
 map <F10> :co .<CR><S-V>r-<esc>v<F2>yykP
 "
 "" Useful abbreviations
-"iab DG Doron Gombosh
-"iab OE Omer Ephrat
-"iab YG Yael Gluk
-"iab YB Yuval Berger
 "iab DR Dima Roginsky
-"iab IR Igal Rilkin
 "
 ""TODO move to global file
 "au BufReadPost *.vsif so ~/bin/vsif.vim
@@ -560,8 +573,10 @@ set go+=acegmiLTrtb
 set guitablabel=%t
 "
 ""svn 
-map <S-F11> :!svn lock %<CR>
-map <S-F12> :!svn ci % -m "Fixed a Bug"<CR>
+"map <S-F11> :!svn lock %<CR>
+"map <S-F12> :!svn ci % -m "Fixed a Bug"<CR>
+map <S-F11> :!ct co -nc %<CR>
+map <S-F12> :!ct ci %<CR>
 map <F12> :tabnew 
 map <F11> :close <CR>
 map <F9>  :MyGrep 
@@ -894,7 +909,7 @@ endif
 "diff to trunk
 set listchars=eol:$,tab:\>\ ,trail:.,extends:>,precedes:<
 set nolist   " to turn on (use :set nolist to turn off)
-map <leader>dt :VCSVimDiff<CR>
+"map <leader>dt :VCSVimDiff<CR>
 
 " Snippets are separated from the engine. Add this if you want them:
 "Plugin 'bundle/vim-snippets'
@@ -922,6 +937,7 @@ set laststatus=2 "always show status line
 " here is an example of how you could replace the branch indicator with
 " the current working directory, followed by the filename.
 let g:airline_section_b = "[" . hostname() . ']%{getcwd()}'
+let g:airline_section_c = '%t'
 
 set number "Show lines numbers
 highlight LineNr ctermfg=grey ctermbg=black guibg=black guifg=grey
@@ -1048,7 +1064,7 @@ let  g:C_UseTool_doxygen = 'yes'
 
 "make vim detect filenames with : so it can open the line and columb
 set isfname+=:
-set isfname-=,
+set isfname+=,
 "make vim detect filenames with {} so it can open a filename with env var ${WS}
 set isfname+={,}
 
@@ -1067,12 +1083,18 @@ if &term == "screen" || &term == "xterm"
   set title
 endif
 
+" disable emacsauto complete
+"let g:loaded_verilog_emacsauto = 1
+
 "clang flags
+" disable clang:
+call pathogen#is_disabled('bundle/clang_complete/plugin/clang_complete.vim')   
 let g:clang_complete_copen = 1
 let g:clang_auto_select = 2
 "let g:clang_jumpto_declaration_key = '<C-.>'
 "let g:clang_jumpto_back_key = '<C-,>'
-let g:clang_library_path ="/home/dorong/bin/clang/lib"
+"to ebnable clang, need to install it instead of the following path
+"let g:clang_library_path ="/home/dorong/bin/clang/lib"
 if has('win32')
    let g:clang_complete_loaded = 1
 endif
