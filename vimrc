@@ -17,6 +17,16 @@ set nocompatible
 
 autocmd! BufEnter *
 
+
+" to disable a bundle, must do it before pathogen#infect
+let g:pathogen_disabled = []
+call add(g:pathogen_disabled, 'bundle/python_mode')
+call add(g:pathogen_disabled, 'bundle/python_mode/plugin/pymode.vim')
+call add(g:pathogen_disabled, 'bundle/python_mode/ftplugin/python/pymode.vim')
+call add(g:pathogen_disabled, '/usr2/droginsk/dotvim/bundle/python_mode')
+call add(g:pathogen_disabled, '/usr2/droginsk/dotvim/bundle/python_mode/plugin/pymode.vim')
+call add(g:pathogen_disabled, '/usr2/droginsk/dotvim/bundle/python_mode/ftplugin/python/pymode.vim')
+
 "call pathogen#runtime_append_all_bundles()
 execute pathogen#infect()
 call pathogen#infect()
@@ -88,7 +98,21 @@ au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
 "for python activate supertab completion - need to move to filetype detect file
+let g:pymode_rope = 0
+let g:pymode = 0
+let g:pymode_lint = 0
+let g:pymode_syntax = 0
+let g:pymode_run = 0
 " this was old stuff from before python mode
+let g:pymode_lint_unmodified = 0
+let g:pymode_lint_signs = 0
+let g:pymode_lint_on_write = 0
+" disable python code check
+let g:pymode_lint = 0
+" Show error message if cursor placed at the error line
+let g:pymode_lint_message = 0
+" default code checkers
+let g:pymode_lint_checkers = ['']
 "au FileType python set omnifunc=pythoncomplete#Complete
 "let g:SuperTabDefaultCompletionType = "context"
 "set completeopt=menuone,longest,preview
@@ -188,6 +212,10 @@ set hlsearch
 set ignorecase
 set smartcase
 "
+
+" align all to ending ,
+map <S-T> :Tabularize /[a-z_A-Z0-9]*,/l1
+
 
 "Enable code folding - let's let the plugin control that
 "set foldenable
@@ -335,7 +363,16 @@ nmap <silent> <A-Down> :wincmd j<CR>
 nmap <silent> <A-Left> :wincmd h<CR>
 nmap <silent> <A-Right> :wincmd l<CR>
 
-let g:ctrlp_cmd='CtrlP /vobs/cores/modemss/streamer_wmss/dtr'
+
+let view_name = system("basename $CLEARCASE_ROOT")
+if view_name =~ "droginsk_himalaya_wmss_14rf_2.0"
+   let g:ctrlp_cmd='CtrlP /vobs/cores/modemss/himalaya_wmss'
+elseif  view_name =~ "droginsk_streamer_dtr_14rf_1.0"
+   let g:ctrlp_cmd='CtrlP /vobs/cores/modemss/streamer_wmss/dtr'
+elseif  view_name =~ "droginsk_magnus_wmss_14lpp_1.0"
+   let g:ctrlp_cmd='CtrlP /vobs/cores/modemss/magnus_wmss/wmss/'
+endif
+
 "ctrlp path example
 "let g:ctrlp_root_markers = ['/vobs/cores/modemss/streamer_wmss/dtr']
 "let g:ctrlp_root_markers = ['/vobs/cores/modemss/streamer_wmss/dtr/sub/sc_common/sub/dan_dfe/sub/phy_fe_logger']
@@ -940,9 +977,29 @@ let g:airline_section_b = "[" . hostname() . ']%{getcwd()}'
 let g:airline_section_c = '%t'
 
 set number "Show lines numbers
+" need VIM 7.3 (or 7.4) and above for the following numbering settings
+set number relativenumber
+"set nonumber norelativenumber  " turn hybrid line numbers off
+"set !number !relativenumber    " toggle hybrid line numbers
+"
 highlight LineNr ctermfg=grey ctermbg=black guibg=black guifg=grey
 
+" TAGS. tag support
+" =========================================
+" tag shortcuts:
+" CTRL+] 	Jump to definition
+" CTRL+t 	Jump back from definition
+" CTRL+W } 	Preview definition
+" g] 	See all definitions
+"
+" re-map goto definition of tag
+" in new tab
+"map <C-[> :tabnew <CR>:exec("tag ".expand("<cword>"))<CR>
+" in vertical split
+"map <C-[> :vs <CR>:exec("tag ".expand("<cword>"))<CR>
+
 "set tags=~/tags
+  "vim.command("set tags=~/tags_axion")
 
 if has("python")
 "autocmd BufReadPost * call SET_TAGS_LOCATION()
@@ -953,7 +1010,11 @@ import vim
 import os
 def set_tags_location():
   pwd = os.getcwd()
-  vim.command("set tags=~/tags")
+  unmanaged =  os.getenv("UNMANAGED_DIR")
+  if not unmanaged:
+     return
+  unmanaged += "/../"
+  vim.command("set tags="+unmanaged+"/tags_gvim")
   if "users" in pwd:
     splitted_pwd = pwd.split("/")
     while "users" in splitted_pwd[:-2]:
@@ -968,6 +1029,7 @@ def set_tags_location():
 set_tags_location()
 endpython
 endfunction
+" =========================================
 
 autocmd BufEnter * call SET_WS()
 function! SET_WS()

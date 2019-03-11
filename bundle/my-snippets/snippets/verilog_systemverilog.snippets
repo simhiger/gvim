@@ -54,7 +54,11 @@ snippet casez
 	endcase
 # instantiation
 snippet inst
-	${1:inst_name} i_$1(/*AUTOINST*/);
+	/*  $1 AUTO_TEMPLATE (
+	); */
+
+	${1:inst_name} 
+		i_$1(/*AUTOINST*/);
 
 # Always block
 snippet always
@@ -75,6 +79,10 @@ snippet module
 		${2}
 		);
 
+		// -------------------------------------------------------------------------
+		//  declarations
+		// -------------------------------------------------------------------------
+		/*AUTOLOGIC*/
 		/*AUTOWIRE*/
 		/*AUTOREG*/
 
