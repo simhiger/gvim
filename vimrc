@@ -1,5 +1,7 @@
 " .vimrc File
 " Maintained by: Dima Roginsky
+" droginsk@qti.qualcomm.com
+" https://www.qualcomm.com/
 "
 
 version 7.4
@@ -450,7 +452,7 @@ function! InsertPythonPackage()
     let result = append(8, "Description  : ") 
     let result = append(9, "Notes        : ") 
     let result = append(10, "---------------------------------------------------------------------------") 
-    let result = append(11, "Copyright ") 
+    let result = append(11, "Copyright 2018 (c) Qualcomm") 
     let result = append(12, "---------------------------------------------------------------------------*/")
     let result = append(13, "'''")     
   
@@ -474,7 +476,7 @@ function! InsertVerilogPackage()
 	 let result = append(8, "// Notes        	: ")
 	 let result = append(9, "// Version			: 0.1")
 	 let result = append(10, "// ---------------------------------------------------------------------------")
-	 let result = append(11, "// Copyright ")
+	 let result = append(11, "// Copyright 2017 (c) Qualcomm")
 	 let result = append(12, "// Confidential Proprietary ")
 	 let result = append(13, "// ---------------------------------------------------------------------------")
 endfunction
