@@ -50,3 +50,9 @@ for windows the file is a part of the repository at "vimfiles\bin" so just add i
 not needed:
 find .vim/ -name "*.vim" -exec dos2unix {} \;
 find .vim/ -name "*.sh" -exec dos2unix {} \;
+
+to clone a new repo (for example vim-Drawit plugin) into submodule here:
+git submodule add https://github.com/hrj/vim-DrawIt.git
+git status # should show 2 changes : .gitsubmodules, vim-Drawit
+git commit -am 'Add vim-Drawit module'
+git push origin master
