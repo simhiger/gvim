@@ -1,0 +1,7 @@
+alias tower2="module unload kits ; module load kits/TOWER/ts18sl ; cd /u/e2017/gerners/ts18sl_workarea ; virtuoso &"
+alias tsmc="module unload kits ; module load kits/TSMC/tsmc65LP ; cd /u/e2017/gerners/tsmc65LP_workarea ; virtuoso &"
+alias tower="module unload kits ; module load kits/TOWER/ts18sl ; cd /u/e2017/gerners/Desktop/embedded/ts18sl_workarea ; virtuoso &"
+alias v="gvim"
+alias c="clsAdminTool -are ."
+alias t="tsmc65; cd DVD"
+alias mannix="t;cd ~/project/mannix"

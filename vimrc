@@ -159,10 +159,10 @@ else
 endif
 
 ""Tab stuff http://vimcasts.org/episodes/tabs-and-spaces/
-set tabstop=3 "the width of the tab character (in spaces)
-set shiftwidth=3 "shiftwidth == softtabstop so i can work with spaces and not tabs
-set softtabstop=3 "how many white spaces to insert when tabbing
-set expandtab "transform tabs to spaces"
+set tabstop=4 "the width of the tab character (in spaces)
+set shiftwidth=4 "shiftwidth == softtabstop so i can work with spaces and not tabs
+set softtabstop=4 "how many white spaces to insert when tabbing
+set noexpandtab "transform tabs to spaces"
 ""set smarttab "inset tabs at start of line and spaces at middle
 
 
@@ -976,7 +976,7 @@ let g:airline_section_c = '%t'
 
 set number "Show lines numbers
 " need VIM 7.3 (or 7.4) and above for the following numbering settings
-set number relativenumber
+set number
 "set nonumber norelativenumber  " turn hybrid line numbers off
 "set !number !relativenumber    " toggle hybrid line numbers
 "
@@ -1134,14 +1134,14 @@ set isfname+={,}
 "autocmd BufReadPost *.log :/\*E
 
 "let &titlestring = hostname() . "[vim(" . expand("%:t") . ")]"
-let &titlestring = "%t"
+"let &titlestring = "%t"
 if &term == "screen"
   set t_ts=^[k
   set t_fs=^[\
 endif
-if &term == "screen" || &term == "xterm"
-  set title
-endif
+"if &term == "screen" || &term == "xterm"
+"  set title
+"endif
 
 " disable emacsauto complete
 "let g:loaded_verilog_emacsauto = 1

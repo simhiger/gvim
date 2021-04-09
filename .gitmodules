@@ -15,7 +15,7 @@
 	url = https://github.com/scrooloose/syntastic
 [submodule "bundle\\colors-solarized"]
 	path = bundle\\colors-solarized
-	url = git://github.com/altercation/vim-colors-solarized.git
+	url = https://github.com/altercation/vim-colors-solarized.git
 [submodule "bundle/airline"]
 	path = bundle/airline
 	url = https://github.com/bling/vim-airline
@@ -24,13 +24,13 @@
 	url = https://github.com/majutsushi/tagbar.git
 [submodule "bundle\\tabular"]
 	path = bundle\\tabular
-	url = git://github.com/godlygeek/tabular.git
+	url = https://github.com/godlygeek/tabular.git
 [submodule "bundle/matchit"]
 	path = bundle/matchit
 	url = https://github.com/vim-scripts/matchit.zip
 [submodule "bundle/python_mode"]
 	path = bundle/python_mode
-	url = git://github.com/klen/python-mode.git
+	url = https://github.com/klen/python-mode.git
 [submodule "bundle/grep"]
 	path = bundle/grep
 	url = https://github.com/vim-scripts/grep.vim
@@ -39,7 +39,7 @@
 	url = https://github.com/vim-scripts/TaskList.vim
 [submodule "bundle/systemverilog"]
 	path = bundle/systemverilog
-	url = git://github.com/WeiChungWu/vim-SystemVerilog.git
+	url = https://github.com/WeiChungWu/vim-SystemVerilog.git
 [submodule "bundle/svn"]
 	path = bundle/svn
 	url = https://github.com/vim-scripts/vcscommand.vim
@@ -87,10 +87,10 @@
 	url = https://github.com/brookhong/cscope.vim.git
 [submodule "bundle/bundle/vim-indent-guides"]
 	path = bundle/bundle/vim-indent-guides
-	url = git://github.com/nathanaelkane/vim-indent-guides.git
+	url = https://github.com/nathanaelkane/vim-indent-guides.git
 [submodule "bundle/vim-indent-guides"]
 	path = bundle/vim-indent-guides
-	url = git://github.com/nathanaelkane/vim-indent-guides.git
+	url = https://github.com/nathanaelkane/vim-indent-guides.git
 [submodule "bundle/vim-DrawIt"]
 	path = bundle/vim-DrawIt
 	url = https://github.com/hrj/vim-DrawIt.git

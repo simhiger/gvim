@@ -1,0 +1,4 @@
+colorscheme default
+map <C-Tab> gt
+map <C-S-Tab> gT
+set nofoldenable
