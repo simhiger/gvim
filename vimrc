@@ -186,7 +186,7 @@ set linespace=3
 ""Better line wrapping
 set wrap
 "" Make shift-W toggle between wrap and unwrap longlines
-map <S-W>  :set wrap! <CR>
+map <C-W>  :set wrap! <CR>
 "
 "" Allow virtual edit, place cursor wherever you want
 "" set ve=all
@@ -605,7 +605,7 @@ set tabpagemax=12
 "
 ""guioptions	list of flags that specify how the GUI works
 set go+=acegmiLTrtb
-set guitablabel=%t
+"set guitablabel=%t
 "
 ""svn 
 "map <S-F11> :!svn lock %<CR>
