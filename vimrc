@@ -63,10 +63,10 @@ set noautowrite
 set backspace=2 "make backspace work like most other apps
 
 "move btween windows with ctrl
-map <c-j> <c-w>j
-map <c-k> <c-w>k
-map <c-l> <c-w>l
-map <c-h> <c-w>h
+noremap <c-j> <c-w>j
+noremap <c-k> <c-w>k
+noremap <c-l> <c-w>l
+noremap <c-h> <c-w>h
 
 "Want a different map leader than \
 "set mapleader = ",";
