@@ -1,0 +1,66 @@
+colorscheme default
+map <C-Tab> gt
+map <C-S-Tab> gT
+""nmap cp :let @* = system("wai " . expand("%") . " >&  /dev/null && wai " . expand("%") . "\|\| echo " . expand("%:p")  )<cr>: let @+ = @*<cr>:let @" = @+<cr>
+nmap cp :let @* = system("wai " . expand("%") . " \| tr -d '\\n' ")<cr>: let @+ = @*<cr>:let @" = @+<cr>
+nmap cpp :let @* = expand("%")<cr>: let @+ = @*<cr>:let @" = @+<cr>
+nmap gf :tabe <cfile><CR>
+set nofoldenable
+function GuiTabLabel()
+	  let label = ''
+	  let buflist = tabpagebuflist(v:lnum)
+
+	  " Add '+' if one of the buffers in the tab page is modified
+	  for bufnr in buflist
+	    if getbufvar(bufnr, "&modified")
+	      let label = '+'
+	      break
+	    endif
+	  endfor
+
+	  " Append the number of windows in the tab page if more than one
+	  let wincount = tabpagewinnr(v:lnum, '$')
+	  if wincount > 1
+	    let label .= wincount
+	  endif
+	  if label != ''
+	    let label .= ' '
+	  endif
+	  let n =bufname(buflist[tabpagewinnr(v:lnum) - 1])
+	  " Append the buffer name
+	  let label .= fnamemodify(n,':t')
+	  return label 
+	endfunction
+
+"	function! GuiTabLabel()
+"    " add the tab number
+"    let label = '['.tabpagenr()
+"
+"    " modified since the last save?
+"    let buflist = tabpagebuflist(v:lnum)
+"    for bufnr in buflist
+"        if getbufvar(bufnr, '&modified')
+"            let label .= '+'
+"            break
+"        endif
+"    endfor
+"
+"    " count number of open windows in the tab
+"    let wincount = tabpagewinnr(v:lnum, '$')
+"    if wincount > 1
+"        let label .= ', '.wincount
+"    endif
+"    let label .= '] '
+"
+"    " add the file name without path information
+"    let n = bufname(buflist[tabpagewinnr(v:lnum) - 1])
+"    let label .= fnamemodify(n, ':t')
+"
+"    return label
+"endfunction
+
+set guitablabel=%{GuiTabLabel()}
+set swapfile
+set expandtab
+
+	"set guitablabel=%{GuiTabLabel()}
