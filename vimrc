@@ -1,5 +1,7 @@
 " .vimrc File
 " Maintained by: Dima Roginsky
+" droginsky
+
 "
 
 version 7.4
@@ -18,12 +20,7 @@ autocmd! BufEnter *
 
 " to disable a bundle, must do it before pathogen#infect
 let g:pathogen_disabled = []
-call add(g:pathogen_disabled, 'bundle/python_mode')
-call add(g:pathogen_disabled, 'bundle/python_mode/plugin/pymode.vim')
-call add(g:pathogen_disabled, 'bundle/python_mode/ftplugin/python/pymode.vim')
-call add(g:pathogen_disabled, '/usr2/droginsk/dotvim/bundle/python_mode')
-call add(g:pathogen_disabled, '/usr2/droginsk/dotvim/bundle/python_mode/plugin/pymode.vim')
-call add(g:pathogen_disabled, '/usr2/droginsk/dotvim/bundle/python_mode/ftplugin/python/pymode.vim')
+"call add(g:pathogen_disabled, 'pymode') " to disable python
 
 "call pathogen#runtime_append_all_bundles()
 execute pathogen#infect()
@@ -46,7 +43,7 @@ call pathogen#infect()
 "call pathogen#interpose('bundle/vim-addon-mw-utils')
 "if &diff
 "else
-"call pathogen#interpose('bundle/python_mode')   
+call pathogen#interpose('bundle/python_mode')   
 "endif
 call pathogen#helptags()
 
@@ -96,8 +93,9 @@ au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
 "for python activate supertab completion - need to move to filetype detect file
+let g:pymode_lint_write = 0
 let g:pymode_rope = 0
-let g:pymode = 0
+let g:pymode=0
 let g:pymode_lint = 0
 let g:pymode_syntax = 0
 let g:pymode_run = 0
@@ -128,6 +126,7 @@ let g:pymode_options_colorcolumn = 0
 "let g:pymode_lint_ignore = "E501,W"
 let g:pymode_lint_ignore = "E501"   "skip 'too long' warning
 
+
 hi Cursor guifg=Black guibg=green
 hi Cursorline term=none cterm=none ctermbg=Green guibg=darkred
 augroup CursorLine
@@ -137,7 +136,7 @@ augroup CursorLine
 augroup END
 
 ""Set the color scheme. Change this to your preference.
-""Here's 100 to choose from: http://www.vim.org/scripts/script.php?script_id=625
+"Here's 100 to choose from: http://www.vim.org/scripts/script.php?script_id=625
 "colorscheme torte
 "Set font type and size. Depends on the resolution. Larger screens, prefer h20
 "set guifont=LucidaTypewriter\ \9
@@ -155,7 +154,7 @@ if has('win32')
    let g:tagbar_ctags_bin = '$HOME/vimfiles/bin/ctags.exe'
 else
    "let g:tagbar_ctags_bin = '$HOME/bin/ctags_install/bin/ctags'
-   let g:tagbar_ctags_bin = 'usr/bin/ctags'
+   let g:tagbar_ctags_bin = '/usr/local/bin/ctags'
 endif
 
 ""Tab stuff http://vimcasts.org/episodes/tabs-and-spaces/
@@ -175,6 +174,12 @@ set showmatch "When a bracket is inserted briefly jump to the matching one
 "set smartindent "this one tries to guess the indent, but it's bad in most cases
 set autoindent "this one is simpler, just takes the indent from the last line, but if I have a special indent file for some filetype, it will overwrite this.
 "
+" plugin vim-indent_guides rules. customized to show the thinest guides
+" allowed by VIM. single character wide, and subtle highlights. for PYTHON
+let g:indent_guides_guide_size = 1
+let g:indent_guides_color_change_percent = 3
+let g:indent_guides_enable_on_vim_startup = 0 "enable/disable
+"
 "set whichwrap=bshl<>[]      "select which keys can wrap lines, I disabled it here, but it looks like it's activated somewhere else.
 "
 "set laststatus=2 "Always show the status line - done by plugin, but maybe I need it because sometimes the statusline dissapears
@@ -184,9 +189,9 @@ set linespace=3
 
 "
 ""Better line wrapping
-set wrap
+"set wrap
 "" Make shift-W toggle between wrap and unwrap longlines
-map <C-W>  :set wrap! <CR>
+"map <C-W>  :set wrap! <CR>
 "
 "" Allow virtual edit, place cursor wherever you want
 "" set ve=all
@@ -195,7 +200,7 @@ set ve=block
 " set the maximum line size (longer than that will be broken to 2 lines) set
 " by plugin but quite anoying.
 ""set textwidth=79
-"set textwidth=0 "unlimited
+set textwidth=0 "unlimited
 "
 " this make some big changes, not everyone will like it.
 ""set formatoptions=qrnl1
@@ -212,7 +217,7 @@ set smartcase
 "
 
 " align all to ending ,
-map <S-T> :Tabularize /[a-z_A-Z0-9]*,/l1
+"map <S-T> :Tabularize /[a-z_A-Z0-9]*,/l1
 
 
 "Enable code folding - let's let the plugin control that
@@ -254,6 +259,7 @@ set splitright
 "Shortcut for editing  vimrc file in a new tab - this is one of the most
 "usefull things in the world!
 nmap <leader>ev :tabedit $MYVIMRC<cr>
+nmap <leader>em :tabedit ~/myvimrc<cr>
 
 ""Saves time; maps the spacebar to colon
 ""nmap <space> :
@@ -292,13 +298,13 @@ set so=5
 "
 " supposed to make it full screen, but I never saw it working well
 "if has("gui_running")
-"  " GUI is running or is about to start.
-"  " Maximize gvim window.
+   "GUI is running or is about to start.
+   "Maximize gvim window.
 "  set lines=999 columns=999
 "endif
 "
 "" Make history buffer larger default 20
-set hi=100
+set hi=10000
 "
 "if !has('win32')
 "   "" Make shell commands work faster
@@ -362,14 +368,37 @@ nmap <silent> <A-Left> :wincmd h<CR>
 nmap <silent> <A-Right> :wincmd l<CR>
 
 
-let view_name = system("basename $CLEARCASE_ROOT")
-if view_name =~ "droginsk_himalaya_wmss_14rf_2.0"
-   let g:ctrlp_cmd='CtrlP /vobs/cores/modemss/himalaya_wmss'
-elseif  view_name =~ "droginsk_streamer_dtr_14rf_1.0"
-   let g:ctrlp_cmd='CtrlP /vobs/cores/modemss/streamer_wmss/dtr'
-elseif  view_name =~ "droginsk_magnus_wmss_14lpp_1.0"
-   let g:ctrlp_cmd='CtrlP /vobs/cores/modemss/magnus_wmss/wmss/'
-endif
+" ---------------
+"  set ctrlp base dir
+" ---------------
+"let view_name = system("basename $CLEARCASE_ROOT")
+"if view_name =~ "droginsk_himalaya_wmss_14rf_2.0"
+"   let g:ctrlp_cmd='CtrlP /vobs/cores/modemss/himalaya_wmss'
+
+autocmd BufEnter * call SetWs()
+function! SetWs()
+python3 << endpython
+import vim
+import os
+def set_ws():
+   curr = os.getcwd()
+   root = "/nfs/rg1dv22/sgerner/"
+   try:
+      curr_s = curr.split(root)[1]
+   except IndexError:
+      curr_s = "x2p_protocol_viol_ws_t103"
+   if "/" in curr_s:
+      ws_name = curr_s.split("/")[0] 
+   else:
+      ws_name = curr_s
+
+   os.environ["WS"] = root+"/"+ws_name
+
+set_ws()
+endpython
+endfunction
+"let g:ctrlp_root_markers = [$WS]
+let g:ctrlp_cmd='CtrlP $WS/eg_ip/'
 
 "ctrlp path example
 "let g:ctrlp_root_markers = ['/vobs/cores/modemss/streamer_wmss/dtr']
@@ -378,8 +407,20 @@ endif
 "let g:ctrlp_user_command = "find %s -type f | egrep -v '/\.(git|hg|svn)|solr|tmp/' | egrep -v '\.(png|exe|jpg|gif|jar|class|swp|swo|log|gitkep|keepme|so|o)$'"
 "Keep caches between sessions - f5 to refresh
 let g:ctrlp_clear_cache_on_exit = 0
-""
-let g:ctrlp_working_path_mode = '' 
+let g:ctrlp_max_files = 500000
+"let g:ctrlp_max_depth = 40
+let g:ctrlp_working_path_mode = 0 
+"Use this option to specify how the newly created file is to be opened when
+"pressing <c-y>: >
+"  let g:ctrlp_open_new_file = 'v'
+"<
+"  t - in a new tab.
+"  h - in a new horizontal split.
+"  v - in a new vertical split.
+"  r - in the current window.
+let g:ctrlp_open_new_file = 't'
+
+
 "
 ""Spelling corrects. Just for example. Add yours below.
 "iab teh the
@@ -398,8 +439,9 @@ if has('win32')
 elseif has('unix')
    set backupdir=$HOME/.backup " backups
 endif
-""set directory=~/.vim/tmp/swap// " swap files
-set noswapfile
+set directory=~/tmp/swap// " swap files
+
+"set noswapfile
 set backup " enable backup
 "set nobackup
 "
@@ -432,7 +474,7 @@ autocmd! BufNewFile *.py call InsertPythonPackage()
 function! InsertPythonPackage() 
     let dir = getcwd() 
     
-    let result = append(0,"#!/usr/bin/python")
+    let result = append(0,"#!/bin/env python3")
     let result = append(1, "'''")     
     let result = append(2, "-------------------------------------------------------------------------") 
     let filename = expand("%") 
@@ -447,21 +489,19 @@ function! InsertPythonPackage()
     elseif has('unix')
        let result = append(7, "Created      : " . date) 
     endif
-    let result = append(8, "Description  : ") 
-    let result = append(9, "Notes        : ") 
-    let result = append(10, "---------------------------------------------------------------------------") 
-    let result = append(11, "Copyright ") 
-    let result = append(12, "---------------------------------------------------------------------------*/")
-    let result = append(13, "'''")     
+    let result = append(8, "Notes        : ") 
+    let result = append(9, "---------------------------------------------------------------------------") 
+    let result = append(10, "Description  : ") 
+    let result = append(11, "---------------------------------------------------------------------------*/")
+    let result = append(12, "'''")     
   
 endfunction
-
-autocmd! BufNewFile *.v,*.sv,*.svh,*.c,*.cpp,*.h call InsertVerilogPackage()
+autocmd! BufNewFile *.v,*.sv,*.vh,*.svh,*.c,*.cpp,*.h call InsertVerilogPackage()
 
 "TODO change name
 function! InsertVerilogPackage() 
-    let filename = expand("%") 
-    let date = strftime("%a %b %d, %Y  %I:%M%p")
+         let filename = expand("%") 
+    	 let date = strftime("%a %b %d, %Y  %I:%M%p")
 	 let result = append(0, "// -------------------------------------------------------------------------")
 	 let result = append(1, "// File name		: " . filename . " ")
 	 let result = append(2, "// Title				: ")
@@ -506,6 +546,8 @@ vmap <S-F2> <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call UnComment(f
 
 autocmd FileType python,sh,make vmap <F2>  <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call Commentpy(fl, ll)<CR>
 autocmd FileType python,sh,make vmap <S-F2> <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call UnCommentpy(fl, ll)<CR>
+autocmd FileType verilog_systemverilog vmap <F2>  <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call Comment(fl, ll)<CR>
+autocmd FileType verilog_systemverilog vmap <S-F2> <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call UnComment(fl, ll)<CR>
 autocmd FileType vim vmap <F2>  <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call CommentVim(fl, ll)<CR>
 autocmd FileType vim vmap <S-F2> <ESC>`<:let fl=line(".")<CR>`>:let ll=line(".")<CR>:call UnCommentVim(fl, ll)<CR>
 "
@@ -601,7 +643,7 @@ nnoremap <leader>u :VerilogGotoInstanceStart<CR>
 
 "
 "" maximum of 20 tabs opened with -p
-set tabpagemax=12
+set tabpagemax=100
 "
 ""guioptions	list of flags that specify how the GUI works
 set go+=acegmiLTrtb
@@ -689,6 +731,20 @@ command! -nargs=* -complete=file MyGrep call MyGrep(<f-args>)
 "" Shorter commands to toggle Taglist display
 "nnoremap TT :TlistToggle<CR>
 map <F4> :Tagbar<CR>
+let g:tagbar_type_systemverilog= {
+    \ 'ctagstype' : 'systemverilog',
+    \ 'kinds'     : [
+        \'c:classes',
+        \'t:tasks',
+        \'f:functions',
+        \'m:modules',
+        \'i:interfaces',
+        \'v:variables',
+        \'d:defines',
+        \'e:typedefs',
+        \'a:parameters'
+  \]
+\}
 "" Various Taglist diplay config:
 "let Tlist_Use_Right_Window = 1
 "let Tlist_Compact_Format = 0
@@ -732,7 +788,7 @@ map <S-Right> <Esc>gt
 "
 "if has("python")
 "function! Doron()
-"python << endpython
+"python3 << endpython
 "import vim
 "def doron():
 "   (row, col) = vim.current.window.cursor
@@ -788,7 +844,7 @@ map <S-Right> <Esc>gt
 "endfunction
 "
 "function! CP1()
-"python << endpython
+"python3 << endpython
 "import vim
 "def cp1():
 "    list_of_vars = []
@@ -848,7 +904,7 @@ map <S-Right> <Esc>gt
 "endfunction
 "
 "function! CP2()
-"python << endpython
+"python3 << endpython
 "import vim
 "def cp2():
 "    list_of_vars = []
@@ -976,7 +1032,7 @@ let g:airline_section_c = '%t'
 
 set number "Show lines numbers
 " need VIM 7.3 (or 7.4) and above for the following numbering settings
-set number
+"set number relativenumber
 "set nonumber norelativenumber  " turn hybrid line numbers off
 "set !number !relativenumber    " toggle hybrid line numbers
 "
@@ -1003,7 +1059,7 @@ if has("python")
 "autocmd BufReadPost * call SET_TAGS_LOCATION()
 autocmd BufEnter * call SET_TAGS_LOCATION()
 function! SET_TAGS_LOCATION()
-python << endpython
+python3 << endpython
 import vim
 import os
 def set_tags_location():
@@ -1031,7 +1087,7 @@ endfunction
 
 autocmd BufEnter * call SET_WS()
 function! SET_WS()
-python << endpython
+python3 << endpython
 import vim
 import os
 def set_ws():
@@ -1055,7 +1111,7 @@ endpython
 endfunction
 
 function! Pydiff()
-python << endpython
+python3 << endpython
 import vim
 import os
 def PyDiff():
@@ -1070,7 +1126,7 @@ endpython
 endfunction
 
 function! MyPwd()
-python << endpython
+python3 << endpython
    import os
    def MyPwd(file):
       print os.path.abspath(file)
@@ -1082,7 +1138,7 @@ endif
 
 function! ElogSettings()
    "colorscheme evening
-   hi Cursorline term=none cterm=none ctermbg=Green guibg=darkred
+   hi Cursorline term=none cterm=none ctermbg=Green
    hi statusline guibg=darkred
    augroup CursorLine
       au!
@@ -1144,7 +1200,7 @@ endif
 "endif
 
 " disable emacsauto complete
-"let g:loaded_verilog_emacsauto = 1
+" let g:loaded_verilog_emacsauto = 1
 
 "clang flags
 " disable clang:
@@ -1371,3 +1427,15 @@ if filereadable(glob("$HOME/myvimrc"))
     source $HOME/myvimrc
 endif
 autocmd! BufNewFile *.py call InsertPythonPackage() 
+
+" function! To_del()
+" python3 << endpython
+" import vim
+" import os
+" def toto():
+"    for i in range(3):
+"       print i
+" 
+" toto()
+" endpython
+" endfunction
